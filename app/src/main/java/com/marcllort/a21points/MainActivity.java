@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "21Ponts";
+    private static final String TAG = "21Points";
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
 

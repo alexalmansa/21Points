@@ -15,58 +15,68 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    /*EditText _emailText;
-    EditText _passwordText;
-    Button _loginButton;
-    TextView _signupLink;*/
+
+    private Button mLoginButton;
+    private TextView mSignupTextView;
+    private EditText mEmailText;
+    private EditText mPasswordText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //ButterKnife.bind(this);
 
-        /*_loginButton.setOnClickListener(new View.OnClickListener() {
+        // Initialize all components
+        mEmailText = (EditText) findViewById(R.id.input_email);
+        mPasswordText = (EditText) findViewById(R.id.input_password);
+        mLoginButton = (Button) findViewById(R.id.btn_login);
+        mSignupTextView = (TextView) findViewById(R.id.text_signup);
 
+
+
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
-        });*/
+        });
 
-        /*_signupLink.setOnClickListener(new View.OnClickListener() {
-
+        mSignupTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
-                //Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                //startActivityForResult(intent, REQUEST_SIGNUP);
-                //finish();
-                //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                startActivity(intent);
+                finish();
             }
-        });*/
+        });
+
     }
 
-    /*public void login() {
-        Log.d(TAG, "Login");
+
+    // Functions
+
+    public void login() {
+        Log.d(TAG, "Login function");
 
         if (!validate()) {
             onLoginFailed();
             return;
         }
 
-        _loginButton.setEnabled(false);
+        mLoginButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+                R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        String email = mEmailText.getText().toString();
+        String password = mPasswordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        // Implemetan el LOGIN AQUI
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -80,17 +90,45 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
+    public boolean validate() {
+        boolean valid = true;
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
-            }
+        String email = mEmailText.getText().toString();
+        String password = mPasswordText.getText().toString();
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailText.setError(getText(R.string.error_mail));
+            valid = false;
+        } else {
+            mPasswordText.setError(null);
         }
+
+        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            mPasswordText.setError(getText(R.string.error_pass));
+            valid = false;
+        } else {
+            mPasswordText.setError(null);
+        }
+
+        return valid;
     }
+
+
+    public void onLoginSuccess() {
+        mLoginButton.setEnabled(true);
+        finish();
+    }
+
+
+    public void onLoginFailed() {
+        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        mLoginButton.setEnabled(true);
+    }
+
+
+
+
+    // Overrides
 
     @Override
     public void onBackPressed() {
@@ -98,37 +136,21 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
-        _loginButton.setEnabled(true);
-        finish();
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SIGNUP) {
+            if (resultCode == RESULT_OK) {
+
+                // Implementar login correcte
+                // demoment acabo activity
+                this.finish();
+            }
+        }
     }
 
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
-        _loginButton.setEnabled(true);
-    }
 
-    public boolean validate() {
-        boolean valid = true;
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
-            valid = false;
-        } else {
-            _emailText.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            _passwordText.setError(null);
-        }
-
-        return valid;
-    }*/
 }
