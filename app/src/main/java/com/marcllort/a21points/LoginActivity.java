@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -148,8 +148,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
 
