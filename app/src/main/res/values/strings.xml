@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">21 Points</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <!-- Login Activity -->
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="register">No account yet? Create one</string>
+
 </resources>
