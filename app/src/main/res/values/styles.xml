@@ -1,34 +1,36 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/verd</item>
         <item name="colorPrimaryDark">@color/verd</item>
         <item name="colorAccent">@color/verd</item>
     </style>
 
-    <!-- Base application theme. -->
+
+    <!-- Textview Style -->
 
 
-    <style name="Widget.Design.TextInputLayout" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
-        <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
-        <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
-        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@style/ErrorText</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/aluminum</item>
+        <item name="colorControlNormal">@color/verd</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/verd</item>
     </style>
 
-    <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
-        <!-- Floating label appearance here -->
-        <item name="android:textColor">@color/verd</item>
-        <item name="android:textSize">20sp</item>
+
+    <style name="ErrorText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/vermell</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="AppTheme.TextErrorAppearance" parent="TextAppearance.Design.Error">
-        <!-- Error message appearance here -->
-        <item name="android:textColor">#ff0000</item>
-        <item name="android:textSize">20sp</item>
+    <style name="HintText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>
+
