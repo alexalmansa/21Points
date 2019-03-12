@@ -1,9 +1,14 @@
 <resources>
 
+
+    <style name="generalnotitle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/verd</item>
-        <item name="colorPrimaryDark">@color/verd</item>
+        <item name="colorPrimary">@color/oil</item>
+        <item name="colorPrimaryDark">@color/oil</item>
         <item name="colorAccent">@color/verd</item>
     </style>
 
