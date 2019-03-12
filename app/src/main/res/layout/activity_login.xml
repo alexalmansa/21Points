@@ -85,7 +85,7 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="@string/register_text"
-            android:textColor="@color/base"
+            android:textColor="@color/iron"
             android:textSize="16dip" />
 
 

@@ -25,6 +25,7 @@ public class SignupActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();                    //Fora actionbar
         setContentView(R.layout.activity_signup);
 
         mRegisterButton = (Button) findViewById(R.id.btn_signup);
