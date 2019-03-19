@@ -1,6 +1,8 @@
 package com.marcllort.a21points;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity implements RegisterCallback {
 
     private static final String TAG = "SignUpActivity";
 
@@ -31,7 +33,7 @@ public class SignupActivity extends AppCompatActivity {
         mRegisterButton = (Button) findViewById(R.id.btn_signup);
         mAlreadyRegTextView = (TextView) findViewById(R.id.text_alreadyLogin);
         mUsernameText = (EditText) findViewById(R.id.input_name);
-        mEmailText = (EditText) findViewById(R.id.input_email);
+        mEmailText = (EditText) findViewById(R.id.input_mail);
         mPasswordText = (EditText) findViewById(R.id.input_password);
         mRePasswordText = (EditText) findViewById(R.id.input_reEnterPassword);
 
@@ -66,12 +68,13 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String user = mUsernameText.getText().toString();
+        String username = mUsernameText.getText().toString();
         String email = mEmailText.getText().toString();
         String password = mPasswordText.getText().toString();
         String repassword = mRePasswordText.getText().toString();
 
         // Implemetan el register AQUI
+        UserTokenManager.getInstance().register(username, email, password, this);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -100,7 +103,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailText.setError(getText(R.string.error_mail));
+            mEmailText.setError(getText(R.string.error_user));
             valid = false;
         } else {
             mPasswordText.setError(null);
@@ -131,4 +134,45 @@ public class SignupActivity extends AppCompatActivity {
         mRegisterButton.setEnabled(true);
         finish();
     }
+
+    @Override
+    public void onSuccess() {
+        new AlertDialog.Builder(this)
+                .setTitle("Register")
+                .setMessage("Register successful")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+        new AlertDialog.Builder(this)
+                .setTitle("Token Error")
+                .setMessage(t.getMessage())
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
 }

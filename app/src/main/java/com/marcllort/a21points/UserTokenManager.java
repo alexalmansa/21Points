@@ -1,5 +1,6 @@
 package com.marcllort.a21points;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -8,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserTokenManager {
 
-    private static final String BASE_URL = "http://192.168.1.173:8080/";
+    private static final String BASE_URL = "http://192.168.1.7:9000/";
     private static UserTokenManager ourInstance;
     private Retrofit retrofit;
     private TokenService tokenService;
@@ -34,8 +35,8 @@ public class UserTokenManager {
     }
 
     public synchronized void getUserToken(String username, String password, final LoginCallback loginCallback) {
-        UserLogin userLogin = new UserLogin(username, password);
-        Call<UserToken> call = tokenService.requestToken(userLogin);
+        UserData userData = new UserData(username, password);
+        Call<UserToken> call = tokenService.requestToken(userData);
 
         call.enqueue(new Callback<UserToken>() {
             @Override
@@ -52,6 +53,28 @@ public class UserTokenManager {
             @Override
             public void onFailure(Call<UserToken> call, Throwable t) {
                 loginCallback.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void register(String username, String email, String password, final RegisterCallback registerCallback) {
+        UserData userData = new UserData(username, email, password);
+        Call<Void> call = tokenService.register(userData);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (response.isSuccessful()) {
+                    registerCallback.onSuccess();
+                } else {
+                    registerCallback.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                registerCallback.onFailure(t);
             }
         });
     }

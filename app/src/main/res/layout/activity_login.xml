@@ -35,10 +35,10 @@
             android:theme="@style/TextInputLayoutAppearance">
 
             <EditText
-                android:id="@+id/input_email"
+                android:id="@+id/input_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
+                android:hint="@string/hint_username"
                 android:textColor="@color/white"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
