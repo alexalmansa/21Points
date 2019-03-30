@@ -20,6 +20,10 @@
 
     <style name="SignupActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimaryDark">@color/verd</item>
+        <item name="colorPrimary">@color/verd</item>
+        <item name="colorAccent">@color/verd</item>
+
+
     </style>
 
     <!-- Textview Style -->

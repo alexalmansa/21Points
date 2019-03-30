@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();                    //Fora actionbar
+
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
 
@@ -61,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         YAxis y = chart.getAxisLeft();
         //y.setTypeface(tfLight);
-        y.setLabelCount(6, false);
-        y.setTextColor(Color.WHITE);
+        y.setLabelCount(5, false);
+        y.setTextColor(R.color.verd);
         y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         y.setDrawGridLines(false);
         y.setAxisLineColor(Color.WHITE);
@@ -79,19 +81,10 @@ public class MainActivity extends AppCompatActivity {
         chart.invalidate();
 
 
-
-
-
         // add data
         //seekBarX.setProgress(45);
         //seekBarY.setProgress(180);
-        setData(10, 5);
-
-
-
-
-
-
+        setData(10, 6);
 
 
 
@@ -118,8 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         LineDataSet set1;
 
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
+        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
             chart.getData().notifyDataChanged();
@@ -132,20 +124,14 @@ public class MainActivity extends AppCompatActivity {
             set1.setCubicIntensity(0.2f);
             set1.setDrawFilled(true);
             set1.setDrawCircles(false);
-            set1.setLineWidth(1.8f);
             set1.setCircleRadius(4f);
             set1.setCircleColor(Color.WHITE);
-            set1.setHighLightColor(Color.rgb(244, 117, 117));
             set1.setColor(Color.WHITE);
             set1.setFillColor(Color.WHITE);
             set1.setFillAlpha(100);
+            set1.setDrawHighlightIndicators(false);
             set1.setDrawHorizontalHighlightIndicator(false);
-            set1.setFillFormatter(new IFillFormatter() {
-                @Override
-                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
-                    return chart.getAxisLeft().getAxisMinimum();
-                }
-            });
+
 
             // create a data object with the data sets
             LineData data = new LineData(set1);

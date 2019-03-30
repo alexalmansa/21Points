@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingTop="56dp"
-        android:paddingRight="24dp">
+        android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/text_week"
@@ -41,41 +39,27 @@
             android:id="@+id/text_daysLeft"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="94dp"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="X days left"
             android:textColor="@color/white"
             android:textSize="16dip" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="Last 5 weeks"
+            android:textColor="@color/verd"
+            android:textSize="16dip" />
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart1"
             android:layout_width="match_parent"
-            android:layout_height="204dp"
+            android:layout_height="267dp"
             android:layout_above="@+id/seekBar1" />
-        <TextView
-            android:id="@+id/tvXMax"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/seekBar1"
-            android:layout_alignParentRight="true"
-            android:text="1"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="10dp"
-            android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/tvYMax"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/seekBar2"
-            android:layout_alignParentRight="true"
-            android:text="2"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="10dp"
-            android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
     </LinearLayout>
