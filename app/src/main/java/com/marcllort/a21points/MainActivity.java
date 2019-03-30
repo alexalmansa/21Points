@@ -1,13 +1,23 @@
 package com.marcllort.a21points;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -24,11 +34,13 @@ import com.github.mikephil.charting.utils.Utils;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     private static final String TAG = "21Points";
     private LineChart chart;
-
+    private FloatingActionButton addButton;
+    private int points;
+    private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
 
@@ -40,6 +52,59 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
 
+        addPoints();
+
+        graphSetup();
+        setData(10, 6);
+
+    }
+
+    private void addPoints() {
+        addButton = (FloatingActionButton) findViewById(R.id.floatingButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+
+
+                Button mAdd = (Button) mView.findViewById(R.id.btnAdd2);
+
+
+                final EditText mNotes = (EditText) mView.findViewById(R.id.etnotes);
+
+
+                points = 0;
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                ExerciceCheck = (CheckBox) mView.findViewById(R.id.checkbox_exercice);
+                EatCheck = (CheckBox) mView.findViewById(R.id.checkbox_eat);
+                DrinkCheck = (CheckBox) mView.findViewById(R.id.checkbox_drink);
+
+
+                mAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        int exercici = ExerciceCheck.isChecked() ? 1 : 0;
+                        int eat = EatCheck.isChecked() ? 1 : 0;
+                        int drink = DrinkCheck.isChecked() ? 1 : 0;
+
+                        RestAPIManager.getInstance().postPoints(new Points("2019-03-16", exercici, eat, drink, mNotes.getText().toString()), MainActivity.this);
+                        dialog.dismiss();
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void graphSetup() {
         chart = findViewById(R.id.chart1);
         chart.setViewPortOffsets(0, 0, 0, 0);
 
@@ -47,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
         chart.getDescription().setEnabled(false);
 
         // enable touch gestures
-        chart.setTouchEnabled(true);
+        chart.setTouchEnabled(false);
 
         // enable scaling and dragging
-        chart.setDragEnabled(true);
-        chart.setScaleEnabled(true);
+        chart.setDragEnabled(false);
+        chart.setScaleEnabled(false);
 
         // if disabled, scaling can be done on x- and y-axis separately
         //chart.setPinchZoom(false);
@@ -72,22 +137,12 @@ public class MainActivity extends AppCompatActivity {
         chart.getAxisRight().setEnabled(false);
 
 
-
         chart.getLegend().setEnabled(false);
 
         chart.animateXY(2000, 2000);
 
         // don't forget to refresh the drawing
         chart.invalidate();
-
-        setData(10, 6);
-
-
-
-        /*Intent intent = new Intent(this, LoginActivity.class);
-        Log.d(TAG, "startActivity(intent) created");
-        startActivity(intent);                                                      // Caldra fer startActibityForResult per saber si ha pogut fer login o no
-        */
     }
 
     private void setData(int count, float range) {
@@ -138,6 +193,26 @@ public class MainActivity extends AppCompatActivity {
             // set data
             chart.setData(data);
         }
+
+    }
+
+    @Override
+    public void onPostPoints(Points points) {
+
+    }
+
+    @Override
+    public void onGetPoints(Points points) {
+
+    }
+
+    @Override
+    public void onLoginSuccess(UserToken userToken) {
+
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
 
     }
 }

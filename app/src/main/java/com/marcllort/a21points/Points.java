@@ -28,11 +28,12 @@ public class Points {
     @Expose
     private User user;
 
-    public Points(String date, Integer exercise, Integer meals, Integer alcohol) {
+    public Points(String date, Integer exercise, Integer meals, Integer alcohol, String notes) {
         this.date = date;
         this.exercise = exercise;
         this.meals = meals;
         this.alcohol = alcohol;
+        this.notes = notes;
     }
 
     public Integer getId() {
