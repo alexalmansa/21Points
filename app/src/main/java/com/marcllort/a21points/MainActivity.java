@@ -2,11 +2,14 @@ package com.marcllort.a21points;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,6 +36,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements RestAPICallBack {
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private LineChart chart;
     private FloatingActionButton addButton;
     private int points;
+    private EditText dateText;
+    private final Calendar myCalendar = Calendar.getInstance();
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
@@ -85,6 +92,38 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 DrinkCheck = (CheckBox) mView.findViewById(R.id.checkbox_drink);
 
 
+
+
+
+                dateText= (EditText) mView.findViewById(R.id.etdate);
+                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        // TODO Auto-generated method stub
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateLabel();
+                    }
+
+                };
+
+                dateText.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        new DatePickerDialog(MainActivity.this, date, myCalendar
+                                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                    }
+                });
+
+
+
+
                 mAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -93,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                         int exercici = ExerciceCheck.isChecked() ? 1 : 0;
                         int eat = EatCheck.isChecked() ? 1 : 0;
                         int drink = DrinkCheck.isChecked() ? 1 : 0;
-
-                        RestAPIManager.getInstance().postPoints(new Points("2019-03-16", exercici, eat, drink, mNotes.getText().toString()), MainActivity.this);
+                        System.out.println(dateText.getText().toString());
+                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), MainActivity.this);
                         dialog.dismiss();
 
                     }
@@ -194,6 +233,14 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             chart.setData(data);
         }
 
+    }
+
+
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+
+        dateText.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
