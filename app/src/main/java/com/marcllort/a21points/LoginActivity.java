@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.length() > 3;
+        return email.length() > 2;
     }
 
     private boolean isPasswordValid(String password) {
@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     @Override
     public void onLoginSuccess(UserToken userToken) {
-        new AlertDialog.Builder(this)
+        /*new AlertDialog.Builder(this)
                 .setTitle("Token")
                 .setMessage("token: "+ userToken.getIdToken())
 
@@ -167,8 +167,14 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .show();*/
         RestAPIManager.getInstance().postPoints(new Points("2019-03-30",1,1,1), this);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        Log.d(TAG, "startActivity(intent) created");
+        startActivity(intent);                                                      // Caldra fer startActibityForResult per saber si ha pogut fer login o no
+        finish();
+
 
         //finish();
     }

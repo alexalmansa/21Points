@@ -3,6 +3,7 @@ package com.marcllort.a21points;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
     private EditText mEmailText;
     private EditText mPasswordText;
     private EditText mRePasswordText;
+    private ProgressDialog nDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,11 +64,6 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
         }
         mRegisterButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.AppTheme);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
 
         String username = mUsernameText.getText().toString();
         String email = mEmailText.getText().toString();
@@ -82,8 +79,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
                         // On complete call either onLoginSuccess or onLoginFailed
                         onSignUpSuccess();
                         // onLoginFailed();
-                        progressDialog.dismiss();
-                        finish(); //sobrara
+
                     }
                 }, 3000);
     }
@@ -131,12 +127,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
     }
 
     public void onSignUpSuccess() {
-        mRegisterButton.setEnabled(true);
-        finish();
-    }
-
-    @Override
-    public void onSuccess() {
+        nDialog.dismiss();
         new AlertDialog.Builder(this)
                 .setTitle("Register")
                 .setMessage("Register successful")
@@ -145,14 +136,28 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
                 // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        mRegisterButton.setEnabled(true);
+                        finish();
                         // Continue with delete operation
                     }
                 })
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.baseline_done_black_18dp)
                 .show();
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+        nDialog = new ProgressDialog(this);
+        nDialog.setMessage("Loading..");
+        nDialog.setTitle("Signing up");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
     }
 
     @Override

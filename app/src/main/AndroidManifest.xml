@@ -13,16 +13,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/SignupActivityTheme">
+            android:name=".LoginActivity"
+            android:theme="@style/LoginActivityTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/LoginActivityTheme" />
+            android:name=".MainActivity"
+            android:theme="@style/SignupActivityTheme" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/SignupActivityTheme" />
