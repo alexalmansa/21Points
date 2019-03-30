@@ -19,7 +19,7 @@ import android.widget.TextView;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoginCallback {
+public class LoginActivity extends AppCompatActivity implements RestAPICallBack {
     private static final String TAG = "LoginActivity";
 
 
@@ -114,7 +114,9 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            UserTokenManager.getInstance().getUserToken(username, password, this);
+            //UserTokenManager.getInstance().getUserToken(username, password, this);
+            RestAPIManager.getInstance().getUserToken(username, password, this);
+
         }
     }
 
@@ -129,7 +131,27 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
     }
 
     @Override
-    public void onSuccess(UserToken userToken) {
+    public void onGetPoints(Points points) {
+        new AlertDialog.Builder(this)
+                .setTitle("Points")
+                .setMessage(points.toString())
+                .show();
+    }
+
+    @Override
+    public void onPostPoints(Points points) {
+        new AlertDialog.Builder(this)
+                .setTitle("POST POINTS")
+                .setMessage(points.toString())
+                .show();
+
+        RestAPIManager.getInstance().getPointsById(points.getId(), this);
+
+
+    }
+
+    @Override
+    public void onLoginSuccess(UserToken userToken) {
         new AlertDialog.Builder(this)
                 .setTitle("Token")
                 .setMessage("token: "+ userToken.getIdToken())
@@ -146,6 +168,9 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+        RestAPIManager.getInstance().postPoints(new Points("2019-03-30",1,1,1), this);
+
+        //finish();
     }
 
     @Override
