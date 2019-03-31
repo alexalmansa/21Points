@@ -38,9 +38,9 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mSignupTextView = (TextView) findViewById(R.id.text_signup);
-        mUserView = (EditText) findViewById(R.id.input_user);
-        mPasswordView = (EditText) findViewById(R.id.input_password);
+        mSignupTextView = findViewById(R.id.text_signup);
+        mUserView = findViewById(R.id.input_user);
+        mPasswordView = findViewById(R.id.input_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.btn_login);
+        Button mEmailSignInButton = findViewById(R.id.btn_login);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     @Override
     public void onFailure(Throwable t) {
-        new AlertDialog.Builder(this)
+        /*new AlertDialog.Builder(this)
                 .setTitle("Login Error")
                 .setMessage(t.getMessage())
 
@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .show();*/
     }
 }
 

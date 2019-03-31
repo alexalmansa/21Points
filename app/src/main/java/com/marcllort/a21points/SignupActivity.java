@@ -32,12 +32,12 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
         getSupportActionBar().hide();                    //Fora actionbar
         setContentView(R.layout.activity_signup);
 
-        mRegisterButton = (Button) findViewById(R.id.btn_signup);
-        mAlreadyRegTextView = (TextView) findViewById(R.id.text_alreadyLogin);
-        mUsernameText = (EditText) findViewById(R.id.input_name);
-        mEmailText = (EditText) findViewById(R.id.input_mail);
-        mPasswordText = (EditText) findViewById(R.id.input_password);
-        mRePasswordText = (EditText) findViewById(R.id.input_reEnterPassword);
+        mRegisterButton = findViewById(R.id.btn_signup);
+        mAlreadyRegTextView = findViewById(R.id.text_alreadyLogin);
+        mUsernameText = findViewById(R.id.input_name);
+        mEmailText = findViewById(R.id.input_mail);
+        mPasswordText = findViewById(R.id.input_password);
+        mRePasswordText = findViewById(R.id.input_reEnterPassword);
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override

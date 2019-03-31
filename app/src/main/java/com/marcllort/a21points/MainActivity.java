@@ -36,9 +36,14 @@ import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
+
+import static java.lang.Thread.sleep;
 
 
 public class MainActivity extends AppCompatActivity implements RestAPICallBack {
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
     private TextView weekPoints;
     private TextView daysLeft;
+    private Boolean initializing = true;
+    private ArrayList<Integer> valors;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
 
@@ -63,11 +70,23 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         setContentView(R.layout.activity_main);
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
+        valors= new ArrayList<>();
+
+        Calendar date = Calendar.getInstance();
+        for (int i = 0; i < 5; i++) {
+
+            String myFormat = "yyyy-MM-dd"; //In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+            date.add(Calendar.DAY_OF_MONTH, -7);
+
+        }
+
 
         thisWeekInitialize();
         addPoints();
         graphSetup();
-        setData(10, 6);
+        //setData(10, 6);
 
 
         //RestAPIManager.getInstance().postPoints(new Points("2019-03-14",1,1,1, ""), this);
@@ -191,11 +210,20 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         ArrayList<Entry> values = new ArrayList<>();
 
+        //values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
 
-        values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
+        ArrayList<Integer> valors2= new ArrayList<>(valors);
+        Collections.reverse(valors2);
+        int i =0;
+        for (Integer val : valors2){
+            values.add(new Entry(i, val.intValue(), getResources().getDrawable(R.drawable.logo)));
+            i++;
+        }
+
+        /*values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
         values.add(new Entry(1, 5, getResources().getDrawable(R.drawable.logo)));
         values.add(new Entry(2, 3, getResources().getDrawable(R.drawable.logo)));
-        values.add(new Entry(3, 1, getResources().getDrawable(R.drawable.logo)));
+        values.add(new Entry(3, 1, getResources().getDrawable(R.drawable.logo)));*/
 
         LineDataSet set1;
 
@@ -239,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
         System.out.println(sdf.format(cal.getTime()));
-        RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
+        //RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
         weekPoints = (TextView) findViewById(R.id.text_points);
         weekPoints.setText("-");
     }
@@ -283,16 +311,45 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     @Override
     public void onGetPoints(Points points) {
 
-        weekPoints.setText(points.getPoints().toString());
+        //weekPoints.setText(points.getPoints().toString());
+
+        Integer punt= points.getPoints();
+
+        new AlertDialog.Builder(this)
+                .setTitle(" POINTS")
+                .setMessage(punt.toString())
+                .show();
 
 
-        int days = daysLeftThisWeek(points);
-        if (days == 1) {
-            daysLeft.setText(days + " day left");
+
+        if (initializing) {
+            String strI = "" + punt.toString();
+            weekPoints.setText(strI);
+
+
+            int days = daysLeftThisWeek(points);
+            if (days == 1) {
+                daysLeft.setText(days + " day left");
+            } else {
+                daysLeft.setText(days + " days left");
+            }
+            initializing = false;
+            //values.add(new Entry(0, points.getPoints(), getResources().getDrawable(R.drawable.logo)));
+            //position++;
+            valors.add(punt);
+
         } else {
-            daysLeft.setText(days + " days left");
+            System.out.println("PUNATS: " + punt);
+            valors.add(punt);
+            System.out.println(Arrays.toString(valors.toArray()));
+            setData(10, 6);
+            //if (points.getPoints() == 0) {
+                //values.add(new Entry(position, 0, getResources().getDrawable(R.drawable.logo)));
+            //} else {
+                //values.add(new Entry(position, points.getPoints(), getResources().getDrawable(R.drawable.logo)));
+            //}
+           // position++;
         }
-
 
     }
 
