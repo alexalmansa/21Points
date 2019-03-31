@@ -168,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();*/
+        //RestAPIManager.getInstance().postPoints(new Points("2019-03-14",1,1,1, ""), this);
 
         Intent intent = new Intent(this, MainActivity.class);
         Log.d(TAG, "startActivity(intent) created");

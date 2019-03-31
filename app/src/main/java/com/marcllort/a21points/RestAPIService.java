@@ -13,6 +13,8 @@ public interface RestAPIService {
     Call<Points> postPoints(@Body Points points, @Header("Authorization") String token);
     @GET("/api/points/{id}")
     Call<Points> getPointsById(@Path("id") Integer id, @Header("Authorization") String token);
+    @GET("/api/points-by-week/{date}")
+    Call<Points> getPointsByWeek(@Path("date") String date, @Header("Authorization") String token);
     @POST("/api/authenticate")
     Call<UserToken> requestToken(@Body UserData userData);
     @POST("/api/register")

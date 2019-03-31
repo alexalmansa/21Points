@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private static final String TAG = "21Points";
     private LineChart chart;
     private FloatingActionButton addButton;
-    private int points;
     private EditText dateText;
     private final Calendar myCalendar = Calendar.getInstance();
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
@@ -64,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         graphSetup();
         setData(10, 6);
 
+
+        //RestAPIManager.getInstance().postPoints(new Points("2019-03-14",1,1,1, ""), this);
+        RestAPIManager.getInstance().getPointsByWeek("2019-03-30",this);
+        //RestAPIManager.getInstance().getPointsById(951, this);
+
     }
 
     private void addPoints() {
@@ -81,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 final EditText mNotes = (EditText) mView.findViewById(R.id.etnotes);
 
 
-                points = 0;
-
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
@@ -92,10 +94,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 DrinkCheck = (CheckBox) mView.findViewById(R.id.checkbox_drink);
 
 
-
-
-
-                dateText= (EditText) mView.findViewById(R.id.etdate);
+                dateText = (EditText) mView.findViewById(R.id.etdate);
                 final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
                     @Override
@@ -120,8 +119,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
                 });
-
-
 
 
                 mAdd.setOnClickListener(new View.OnClickListener() {
@@ -188,11 +185,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         ArrayList<Entry> values = new ArrayList<>();
 
-        /*for (int i = 0; i < count; i++) {
-
-            float val = (float) (Math.random() * range) - 30;
-            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.logo)));
-        }*/
 
         values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
         values.add(new Entry(1, 5, getResources().getDrawable(R.drawable.logo)));
@@ -245,11 +237,21 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     @Override
     public void onPostPoints(Points points) {
+        new AlertDialog.Builder(this)
+                .setTitle("POST POINTS")
+                .setMessage(points.toString())
+                .show();
 
+        //RestAPIManager.getInstance().getPointsById(points.getId(), this);
+        RestAPIManager.getInstance().getPointsByWeek("2019-03-30",this);
     }
 
     @Override
     public void onGetPoints(Points points) {
+        new AlertDialog.Builder(this)
+                .setTitle("Points")
+                .setMessage(points.getWeek().toString()+"  "+points.getPoints())
+                .show();
 
     }
 
@@ -260,6 +262,9 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     @Override
     public void onFailure(Throwable t) {
-
+        new AlertDialog.Builder(this)
+                .setTitle("Points")
+                .setMessage("falla:"+ t.getMessage() )
+                .show();
     }
 }

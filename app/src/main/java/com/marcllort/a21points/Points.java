@@ -27,6 +27,12 @@ public class Points {
     @SerializedName("user")
     @Expose
     private User user;
+    @SerializedName("week")
+    @Expose
+    private String week;
+    @SerializedName("points")
+    @Expose
+    private Integer points;
 
     public Points(String date, Integer exercise, Integer meals, Integer alcohol, String notes) {
         this.date = date;
@@ -90,6 +96,22 @@ public class Points {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
     @Override
