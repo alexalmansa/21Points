@@ -1,49 +1,35 @@
 package com.marcllort.a21points;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.drawable.Drawable;
+
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IFillFormatter;
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.Utils;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
-
-import static java.lang.Thread.sleep;
 
 
 public class MainActivity extends AppCompatActivity implements RestAPICallBack {
@@ -70,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         setContentView(R.layout.activity_main);
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
-        valors= new ArrayList<>();
+        valors = new ArrayList<>();
 
         Calendar date = Calendar.getInstance();
         for (int i = 0; i < 5; i++) {
@@ -212,10 +198,10 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         //values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
 
-        ArrayList<Integer> valors2= new ArrayList<>(valors);
+        ArrayList<Integer> valors2 = new ArrayList<>(valors);
         Collections.reverse(valors2);
-        int i =0;
-        for (Integer val : valors2){
+        int i = 0;
+        for (Integer val : valors2) {
             values.add(new Entry(i, val.intValue(), getResources().getDrawable(R.drawable.logo)));
             i++;
         }
@@ -309,17 +295,16 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
     @Override
-    public void onGetPoints(Points points) {
+    public synchronized void onGetPoints(Points points) {
 
         //weekPoints.setText(points.getPoints().toString());
 
-        Integer punt= points.getPoints();
+        Integer punt = points.getPoints();
 
         new AlertDialog.Builder(this)
                 .setTitle(" POINTS")
                 .setMessage(punt.toString())
                 .show();
-
 
 
         if (initializing) {
@@ -339,16 +324,15 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             valors.add(punt);
 
         } else {
-            System.out.println("PUNATS: " + punt);
             valors.add(punt);
             System.out.println(Arrays.toString(valors.toArray()));
             setData(10, 6);
             //if (points.getPoints() == 0) {
-                //values.add(new Entry(position, 0, getResources().getDrawable(R.drawable.logo)));
+            //values.add(new Entry(position, 0, getResources().getDrawable(R.drawable.logo)));
             //} else {
-                //values.add(new Entry(position, points.getPoints(), getResources().getDrawable(R.drawable.logo)));
+            //values.add(new Entry(position, points.getPoints(), getResources().getDrawable(R.drawable.logo)));
             //}
-           // position++;
+            // position++;
         }
 
     }
@@ -360,6 +344,10 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     @Override
     public void onFailure(Throwable t) {
+
+        System.out.println(t.getStackTrace().toString());
+        System.out.println(t.getLocalizedMessage());
+
         new AlertDialog.Builder(this)
                 .setTitle("Points")
                 .setMessage("falla:" + t.getMessage())
