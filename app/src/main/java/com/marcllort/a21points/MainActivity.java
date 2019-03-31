@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -35,6 +36,7 @@ import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private EditText dateText;
     private final Calendar myCalendar = Calendar.getInstance();
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
+    private TextView weekPoints;
+    private TextView daysLeft;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
 
@@ -58,14 +62,16 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
 
-        addPoints();
+        daysLeft = (TextView) findViewById(R.id.text_daysLeft);
 
+        thisWeekInitialize();
+        addPoints();
         graphSetup();
         setData(10, 6);
 
 
         //RestAPIManager.getInstance().postPoints(new Points("2019-03-14",1,1,1, ""), this);
-        RestAPIManager.getInstance().getPointsByWeek("2019-03-30",this);
+
         //RestAPIManager.getInstance().getPointsById(951, this);
 
     }
@@ -227,12 +233,40 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     }
 
+    private void thisWeekInitialize() {
+        Calendar cal = Calendar.getInstance();
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+
+        System.out.println(sdf.format(cal.getTime()));
+        RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
+        weekPoints = (TextView) findViewById(R.id.text_points);
+        weekPoints.setText("-");
+    }
 
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
         dateText.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private int daysLeftThisWeek(Points points) {
+        Calendar week = Calendar.getInstance();
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+        try {
+            week.setTime(sdf.parse(points.getWeek()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar now = Calendar.getInstance();
+
+        long difference = now.getTimeInMillis() - week.getTimeInMillis();
+        int days = (int) (difference / (1000 * 60 * 60 * 24));
+
+
+        return 7 - days;
     }
 
     @Override
@@ -243,15 +277,22 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 .show();
 
         //RestAPIManager.getInstance().getPointsById(points.getId(), this);
-        RestAPIManager.getInstance().getPointsByWeek("2019-03-30",this);
+        RestAPIManager.getInstance().getPointsByWeek("2019-03-30", this);
     }
 
     @Override
     public void onGetPoints(Points points) {
-        new AlertDialog.Builder(this)
-                .setTitle("Points")
-                .setMessage(points.getWeek().toString()+"  "+points.getPoints())
-                .show();
+
+        weekPoints.setText(points.getPoints().toString());
+
+
+        int days = daysLeftThisWeek(points);
+        if (days == 1) {
+            daysLeft.setText(days + " day left");
+        } else {
+            daysLeft.setText(days + " days left");
+        }
+
 
     }
 
@@ -264,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     public void onFailure(Throwable t) {
         new AlertDialog.Builder(this)
                 .setTitle("Points")
-                .setMessage("falla:"+ t.getMessage() )
+                .setMessage("falla:" + t.getMessage())
                 .show();
     }
 }
