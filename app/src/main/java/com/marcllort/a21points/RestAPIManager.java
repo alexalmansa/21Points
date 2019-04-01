@@ -56,6 +56,28 @@ public class RestAPIManager {
         });
     }
 
+    public synchronized void register(String username, String email, String password, final RegisterCallback registerCallback) {
+        UserData userData = new UserData(username, email, password);
+        Call<Void> call = restApiService.register(userData);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (response.isSuccessful()) {
+                    registerCallback.onSuccess();
+                } else {
+                    registerCallback.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                registerCallback.onFailure(t);
+            }
+        });
+    }
+
     public synchronized void postPoints(Points points, final RestAPICallBack restAPICallBack) {
         final Points newUserPoints = points;
         Call<Points> call = restApiService.postPoints(newUserPoints, "Bearer " + userToken.getIdToken());
@@ -78,7 +100,7 @@ public class RestAPIManager {
         });
     }
 
-    public synchronized void getPointsById( Integer id , final RestAPICallBack restAPICallBack) {
+    public synchronized void getPointsById(Integer id, final RestAPICallBack restAPICallBack) {
         Call<Points> call = restApiService.getPointsById(id, "Bearer " + userToken.getIdToken());
 
         call.enqueue(new Callback<Points>() {
@@ -99,7 +121,7 @@ public class RestAPIManager {
         });
     }
 
-    public synchronized void getPointsByWeek( String date , final RestAPICallBack restAPICallBack) {
+    public synchronized void getPointsByWeek(String date, final RestAPICallBack restAPICallBack) {
         Call<Points> call = restApiService.getPointsByWeek(date, "Bearer " + userToken.getIdToken());
 
         call.enqueue(new Callback<Points>() {
@@ -120,24 +142,130 @@ public class RestAPIManager {
         });
     }
 
-    public synchronized void register(String username, String email, String password, final RegisterCallback registerCallback) {
-        UserData userData = new UserData(username, email, password);
-        Call<Void> call = restApiService.register(userData);
+    public synchronized void postBlood(Blood blood, final RestAPICallBack restAPICallBack) {
+        final Blood newUserBlood = blood;
+        Call<Blood> call = restApiService.postBlood(newUserBlood, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<Blood>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<Blood> call, Response<Blood> response) {
 
                 if (response.isSuccessful()) {
-                    registerCallback.onSuccess();
+                    restAPICallBack.onPostBlood(response.body());
                 } else {
-                    registerCallback.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                registerCallback.onFailure(t);
+            public void onFailure(Call<Blood> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void getBloodById(Integer id, final RestAPICallBack restAPICallBack) {
+        Call<Points> call = restApiService.getPointsById(id, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Points>() {
+            @Override
+            public void onResponse(Call<Points> call, Response<Points> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onGetPoints(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Points> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void getBloodbyMonth(String date, final RestAPICallBack restAPICallBack) {
+        Call<Points> call = restApiService.getPointsByWeek(date, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Points>() {
+            @Override
+            public void onResponse(Call<Points> call, Response<Points> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onGetPoints(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Points> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void postWeight(Weight weight, final RestAPICallBack restAPICallBack) {
+        final Weight newUserWeight = weight;
+        Call<Weight> call = restApiService.postWeight(newUserWeight, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Weight>() {
+            @Override
+            public void onResponse(Call<Weight> call, Response<Weight> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onPostWeight(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Weight> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void getWeightById(Integer id, final RestAPICallBack restAPICallBack) {
+        Call<Points> call = restApiService.getPointsById(id, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Points>() {
+            @Override
+            public void onResponse(Call<Points> call, Response<Points> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onGetPoints(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Points> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void getWeightbyMonth(String date, final RestAPICallBack restAPICallBack) {
+        Call<Points> call = restApiService.getPointsByWeek(date, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Points>() {
+            @Override
+            public void onResponse(Call<Points> call, Response<Points> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onGetPoints(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Points> call, Throwable t) {
+                restAPICallBack.onFailure(t);
             }
         });
     }

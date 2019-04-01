@@ -139,6 +139,26 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
     }
 
     @Override
+    public void onPostBlood(Blood blood) {
+
+    }
+
+    @Override
+    public void onGetBlood(Blood blood) {
+
+    }
+
+    @Override
+    public void onPostWeight(Weight weight) {
+
+    }
+
+    @Override
+    public void onGetWeight(Weight weight) {
+
+    }
+
+    @Override
     public void onPostPoints(Points points) {
         new AlertDialog.Builder(this)
                 .setTitle("POST POINTS")

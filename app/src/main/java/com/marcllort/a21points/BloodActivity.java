@@ -27,11 +27,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements RestAPICallBack {
+public class BloodActivity extends AppCompatActivity implements RestAPICallBack {
 
     private static final String TAG = "21Points";
     private LineChart chart;
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(BloodActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
 
 
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
-                        new DatePickerDialog(MainActivity.this, date, myCalendar
+                        new DatePickerDialog(BloodActivity.this, date, myCalendar
                                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                         int exercici = ExerciceCheck.isChecked() ? 1 : 0;
                         int eat = EatCheck.isChecked() ? 1 : 0;
                         int drink = DrinkCheck.isChecked() ? 1 : 0;
-                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), MainActivity.this);
+                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), BloodActivity.this);
                         dialog.dismiss();
 
                     }

@@ -2,14 +2,12 @@ package com.marcllort.a21points;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-
 import android.graphics.Color;
-
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +29,7 @@ import java.util.Collections;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements RestAPICallBack {
+public class WeightActivity extends AppCompatActivity implements RestAPICallBack {
 
     private static final String TAG = "21Points";
     private LineChart chart;
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(WeightActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
 
 
@@ -148,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
-                        new DatePickerDialog(MainActivity.this, date, myCalendar
+                        new DatePickerDialog(WeightActivity.this, date, myCalendar
                                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
@@ -163,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                         int exercici = ExerciceCheck.isChecked() ? 1 : 0;
                         int eat = EatCheck.isChecked() ? 1 : 0;
                         int drink = DrinkCheck.isChecked() ? 1 : 0;
-                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), MainActivity.this);
+                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), WeightActivity.this);
                         dialog.dismiss();
 
                     }

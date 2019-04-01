@@ -9,14 +9,38 @@ import retrofit2.http.Path;
 
 public interface RestAPIService {
 
-    @POST("/api/points")
-    Call<Points> postPoints(@Body Points points, @Header("Authorization") String token);
-    @GET("/api/points/{id}")
-    Call<Points> getPointsById(@Path("id") Integer id, @Header("Authorization") String token);
-    @GET("/api/points-by-week/{date}")
-    Call<Points> getPointsByWeek(@Path("date") String date, @Header("Authorization") String token);
     @POST("/api/authenticate")
     Call<UserToken> requestToken(@Body UserData userData);
+
     @POST("/api/register")
     Call<Void> register(@Body UserData userData);
+
+    @POST("/api/points")
+    Call<Points> postPoints(@Body Points points, @Header("Authorization") String token);
+
+    @POST("/api/blood-pressures")
+    Call<Blood> postBlood(@Body Blood blood, @Header("Authorization") String token);
+
+    @POST("/api/weights")
+    Call<Weight> postWeight(@Body Weight weight, @Header("Authorization") String token);
+
+
+    @GET("/api/points/{id}")
+    Call<Points> getPointsById(@Path("id") Integer id, @Header("Authorization") String token);
+
+    @GET("/api/points-by-week/{date}")
+    Call<Points> getPointsByWeek(@Path("date") String date, @Header("Authorization") String token);
+
+    @GET("/api/blood-pressures/{id}")
+    Call<Blood> getBloodById(@Path("id") Integer id, @Header("Authorization") String token);
+
+    @GET("/api/bp-by-month/{date}")
+    Call<Blood> getBloodByMonth(@Path("date") String date, @Header("Authorization") String token);
+
+    @GET("/api/weights/{id}")
+    Call<Weight> getWeightById(@Path("id") Integer id, @Header("Authorization") String token);
+
+    @GET("/api/weight-by-month/{date}")
+    Call<Weight> getWeightByMonth(@Path("date") String date, @Header("Authorization") String token);
+
 }
