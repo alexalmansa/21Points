@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestAPIManager {
 
     private static final String BASE_URL = "http://" +
-            "192.168.1.2:9000/";
+            "62.57.153.128:9000/";
     private static RestAPIManager ourInstance;
     private Retrofit retrofit;
     private RestAPIService restApiService;
