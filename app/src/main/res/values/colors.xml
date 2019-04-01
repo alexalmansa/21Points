@@ -15,7 +15,9 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
     <color name="rosa">#bd0052</color>
+    <color name="morat">#BD002C</color>
     <color name="verd">#70a83b</color>
     <color name="vermell">#FF0000</color>
+    <color name="blau">#03A9F4</color>
 
 </resources>
