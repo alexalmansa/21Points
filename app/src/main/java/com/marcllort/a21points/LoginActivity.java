@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
     private EditText mPasswordView;
     private View mLoginFormView;
     private TextView mSignupTextView;
-
+    private boolean started = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +172,10 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
         Intent intent = new Intent(this, MainActivity.class);
         Log.d(TAG, "startActivity(intent) created");
-        startActivity(intent);                                                      // Caldra fer startActibityForResult per saber si ha pogut fer login o no
+        if (!started) {
+            startActivity(intent);                                                      // Caldra fer startActibityForResult per saber si ha pogut fer login o no
+            started = true;
+        }
         finish();
 
 
@@ -181,6 +184,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     @Override
     public void onFailure(Throwable t) {
+        //finish();
         /*new AlertDialog.Builder(this)
                 .setTitle("Login Error")
                 .setMessage(t.getMessage())

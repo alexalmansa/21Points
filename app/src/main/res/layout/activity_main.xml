@@ -53,12 +53,13 @@
             android:gravity="center"
             android:text="Last 5 weeks"
             android:textColor="@color/verd"
-            android:textSize="16dip" />
+            android:textSize="16dip"
+            android:paddingBottom="10dp"/>
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart1"
             android:layout_width="match_parent"
-            android:layout_height="267dp"
+            android:layout_height="377dp"
             android:layout_above="@+id/seekBar1" />
 
 
