@@ -6,56 +6,28 @@ import com.google.gson.annotations.SerializedName;
 
 public class Blood {
 
-    @SerializedName("activated")
+    @SerializedName("diastolic")
     @Expose
-    private Boolean activated;
-    @SerializedName("email")
-    @Expose
-    private String email;
-    @SerializedName("firstName")
-    @Expose
-    private String firstName;
+    private Integer diastolic;
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("imageUrl")
+    @SerializedName("systolic")
     @Expose
-    private String imageUrl;
-    @SerializedName("langKey")
+    private Integer systolic;
+    @SerializedName("timestamp")
     @Expose
-    private String langKey;
-    @SerializedName("lastName")
+    private String timestamp;
+    @SerializedName("user")
     @Expose
-    private String lastName;
-    @SerializedName("login")
-    @Expose
-    private String login;
-    @SerializedName("resetDate")
-    @Expose
-    private String resetDate;
+    private User user;
 
-    public Boolean getActivated() {
-        return activated;
+    public Integer getBlood() {
+        return diastolic;
     }
 
-    public void setActivated(Boolean activated) {
-        this.activated = activated;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setDiastolic(Integer diastolic) {
+        this.diastolic = diastolic;
     }
 
     public Integer getId() {
@@ -66,44 +38,28 @@ public class Blood {
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Integer getSystolic() {
+        return systolic;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setSystolic(Integer systolic) {
+        this.systolic = systolic;
     }
 
-    public String getLangKey() {
-        return langKey;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getLastName() {
-        return lastName;
+    public User getUser() {
+        return user;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getResetDate() {
-        return resetDate;
-    }
-
-    public void setResetDate(String resetDate) {
-        this.resetDate = resetDate;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

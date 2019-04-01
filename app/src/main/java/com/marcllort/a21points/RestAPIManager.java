@@ -165,42 +165,42 @@ public class RestAPIManager {
     }
 
     public synchronized void getBloodById(Integer id, final RestAPICallBack restAPICallBack) {
-        Call<Points> call = restApiService.getPointsById(id, "Bearer " + userToken.getIdToken());
+        Call<Blood> call = restApiService.getBloodById(id, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Points>() {
+        call.enqueue(new Callback<Blood>() {
             @Override
-            public void onResponse(Call<Points> call, Response<Points> response) {
+            public void onResponse(Call<Blood> call, Response<Blood> response) {
 
                 if (response.isSuccessful()) {
-                    restAPICallBack.onGetPoints(response.body());
+                    restAPICallBack.onGetBlood(response.body());
                 } else {
                     restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Points> call, Throwable t) {
+            public void onFailure(Call<Blood> call, Throwable t) {
                 restAPICallBack.onFailure(t);
             }
         });
     }
 
     public synchronized void getBloodbyMonth(String date, final RestAPICallBack restAPICallBack) {
-        Call<Points> call = restApiService.getPointsByWeek(date, "Bearer " + userToken.getIdToken());
+        Call<Blood> call = restApiService.getBloodByMonth(date, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Points>() {
+        call.enqueue(new Callback<Blood>() {
             @Override
-            public void onResponse(Call<Points> call, Response<Points> response) {
+            public void onResponse(Call<Blood> call, Response<Blood> response) {
 
                 if (response.isSuccessful()) {
-                    restAPICallBack.onGetPoints(response.body());
+                    restAPICallBack.onGetBlood(response.body());
                 } else {
                     restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Points> call, Throwable t) {
+            public void onFailure(Call<Blood> call, Throwable t) {
                 restAPICallBack.onFailure(t);
             }
         });
@@ -229,42 +229,42 @@ public class RestAPIManager {
     }
 
     public synchronized void getWeightById(Integer id, final RestAPICallBack restAPICallBack) {
-        Call<Points> call = restApiService.getPointsById(id, "Bearer " + userToken.getIdToken());
+        Call<Weight> call = restApiService.getWeightById(id, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Points>() {
+        call.enqueue(new Callback<Weight>() {
             @Override
-            public void onResponse(Call<Points> call, Response<Points> response) {
+            public void onResponse(Call<Weight> call, Response<Weight> response) {
 
                 if (response.isSuccessful()) {
-                    restAPICallBack.onGetPoints(response.body());
+                    restAPICallBack.onGetWeight(response.body());
                 } else {
                     restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Points> call, Throwable t) {
+            public void onFailure(Call<Weight> call, Throwable t) {
                 restAPICallBack.onFailure(t);
             }
         });
     }
 
     public synchronized void getWeightbyMonth(String date, final RestAPICallBack restAPICallBack) {
-        Call<Points> call = restApiService.getPointsByWeek(date, "Bearer " + userToken.getIdToken());
+        Call<Weight> call = restApiService.getWeightByMonth(date, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Points>() {
+        call.enqueue(new Callback<Weight>() {
             @Override
-            public void onResponse(Call<Points> call, Response<Points> response) {
+            public void onResponse(Call<Weight> call, Response<Weight> response) {
 
                 if (response.isSuccessful()) {
-                    restAPICallBack.onGetPoints(response.body());
+                    restAPICallBack.onGetWeight(response.body());
                 } else {
                     restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Points> call, Throwable t) {
+            public void onFailure(Call<Weight> call, Throwable t) {
                 restAPICallBack.onFailure(t);
             }
         });

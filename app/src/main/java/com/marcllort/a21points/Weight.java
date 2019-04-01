@@ -6,57 +6,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class Weight {
 
-    @SerializedName("activated")
-    @Expose
-    private Boolean activated;
-    @SerializedName("email")
-    @Expose
-    private String email;
-    @SerializedName("firstName")
-    @Expose
-    private String firstName;
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("imageUrl")
+    @SerializedName("timestamp")
     @Expose
-    private String imageUrl;
-    @SerializedName("langKey")
+    private String timestamp;
+    @SerializedName("user")
     @Expose
-    private String langKey;
-    @SerializedName("lastName")
+    private User user;
+    @SerializedName("weight")
     @Expose
-    private String lastName;
-    @SerializedName("login")
-    @Expose
-    private String login;
-    @SerializedName("resetDate")
-    @Expose
-    private String resetDate;
-
-    public Boolean getActivated() {
-        return activated;
-    }
-
-    public void setActivated(Boolean activated) {
-        this.activated = activated;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    private Integer weight;
 
     public Integer getId() {
         return id;
@@ -66,44 +27,28 @@ public class Weight {
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getLangKey() {
-        return langKey;
+    public User getUser() {
+        return user;
     }
 
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Integer getWeight() {
+        return weight;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getResetDate() {
-        return resetDate;
-    }
-
-    public void setResetDate(String resetDate) {
-        this.resetDate = resetDate;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
 }

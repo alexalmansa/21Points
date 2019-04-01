@@ -24,6 +24,13 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.marcllort.a21points.Blood;
+import com.marcllort.a21points.Points;
+import com.marcllort.a21points.R;
+import com.marcllort.a21points.RestAPICallBack;
+import com.marcllort.a21points.RestAPIManager;
+import com.marcllort.a21points.UserToken;
+import com.marcllort.a21points.Weight;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -35,16 +42,16 @@ import java.util.Locale;
 
 public class BloodActivity extends AppCompatActivity implements RestAPICallBack {
 
-    private static final String TAG = "21Points";
+    private static final String TAG = "21Blood";
     private LineChart chart;
     private FloatingActionButton addButton;
     private EditText dateText;
     private final Calendar myCalendar = Calendar.getInstance();
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
-    private TextView weekPoints;
+    private TextView MonthBlood;
     private TextView daysLeft;
     private Boolean initializing = true;
-    private ArrayList<Points> valors;
+    private ArrayList<Blood> valors;
     private Calendar date;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
@@ -62,8 +69,8 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
         date = Calendar.getInstance();
 
         refreshGraph();
-        thisWeekInitialize();
-        addPoints();
+        thisMonthInitialize();
+        addBlood();
         graphSetup();
 
     }
@@ -76,34 +83,34 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         //for (int i = 0; i < 5; i++) {
-        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+        RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
         //  date.add(Calendar.DAY_OF_MONTH, -7);
         //}
 
     }
 
-    private void checkReceived(Points punt) {
+    private void checkReceived(Blood punt) {
 
 
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
 
-        if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek());
+        if (!punt.getTimestamp().equals(sdf.format(date.getTime()))) {
+            RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
+            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getBlood() + "  " + punt.getTimestamp());
         } else {
-            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
+            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getBlood() + "  " + punt.getTimestamp());
             valors.add(punt);
             date.add(Calendar.DAY_OF_MONTH, -7);
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+            RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
 
         }
 
 
     }
 
-    private void addPoints() {
+    private void addBlood() {
         addButton = (FloatingActionButton) findViewById(R.id.floatingButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +172,7 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
                         int exercici = ExerciceCheck.isChecked() ? 1 : 0;
                         int eat = EatCheck.isChecked() ? 1 : 0;
                         int drink = DrinkCheck.isChecked() ? 1 : 0;
-                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), BloodActivity.this);
+                        RestAPIManager.getInstance().postBlood(new Blood(), BloodActivity.this);
                         dialog.dismiss();
 
                     }
@@ -220,11 +227,11 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
 
         ArrayList<Entry> values = new ArrayList<>();
 
-        ArrayList<Points> valors2 = new ArrayList<>(valors);
+        ArrayList<Blood> valors2 = new ArrayList<>(valors);
         Collections.reverse(valors2);
         int i = 0;
-        for (Points val : valors2) {
-            values.add(new Entry(i, val.getPoints().intValue(), getResources().getDrawable(R.drawable.logo)));
+        for (Blood val : valors2) {
+            values.add(new Entry(i, val.getBlood().intValue(), getResources().getDrawable(R.drawable.logo)));
             i++;
         }
 
@@ -266,28 +273,28 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
 
     }
 
-    private void thisWeekInitialize() {
+    private void thisMonthInitialize() {
         Calendar cal = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-        //RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
-        weekPoints = (TextView) findViewById(R.id.text_points);
-        weekPoints.setText("-");
+        //RestAPIManager.getInstance().getBloodByMonth(sdf.format(cal.getTime()), this);
+        MonthBlood = (TextView) findViewById(R.id.text_points);
+        MonthBlood.setText("-");
     }
 
-    private int daysLeftThisWeek(Points points) {
-        Calendar week = Calendar.getInstance();
+    private int daysLeftThisMonth(Blood Blood) {
+        Calendar Month = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         try {
-            week.setTime(sdf.parse(points.getWeek()));
+            Month.setTime(sdf.parse(Blood.getTimestamp()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Calendar now = Calendar.getInstance();
 
-        long difference = now.getTimeInMillis() - week.getTimeInMillis();
+        long difference = now.getTimeInMillis() - Month.getTimeInMillis();
         int days = (int) (difference / (1000 * 60 * 60 * 24));
 
 
@@ -296,9 +303,19 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
 
     @Override
     public void onPostPoints(Points points) {
+
+    }
+
+    @Override
+    public void onGetPoints(Points points) {
+
+    }
+
+    @Override
+    public void onPostBlood(Blood Blood) {
         new AlertDialog.Builder(this)
-                .setTitle("Points added")
-                .setMessage(points.toString())
+                .setTitle("Blood added")
+                .setMessage(Blood.toString())
                 .show();
 
 
@@ -307,17 +324,17 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
     }
 
     @Override
-    public synchronized void onGetPoints(Points points) {
+    public synchronized void onGetBlood(Blood Blood) {
 
-        Points punt = points;
+        Blood punt = Blood;
 
 
         if (initializing) {
-            String strI = "" + punt.getPoints().toString();
-            weekPoints.setText(strI);
+            String strI = "" + punt.getBlood().toString();
+            MonthBlood.setText(strI);
 
 
-            int days = daysLeftThisWeek(points);
+            int days = daysLeftThisMonth(Blood);
             if (days == 1) {
                 daysLeft.setText(days + " day left");
             } else {
@@ -338,16 +355,6 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
     }
 
     @Override
-    public void onPostBlood(Blood blood) {
-
-    }
-
-    @Override
-    public void onGetBlood(Blood blood) {
-
-    }
-
-    @Override
     public void onPostWeight(Weight weight) {
 
     }
@@ -362,11 +369,12 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
 
     }
 
+
     @Override
     public void onFailure(Throwable t) {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+        RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
 
     }
 }

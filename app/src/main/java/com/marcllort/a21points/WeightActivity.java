@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,16 +32,16 @@ import java.util.Locale;
 
 public class WeightActivity extends AppCompatActivity implements RestAPICallBack {
 
-    private static final String TAG = "21Points";
+    private static final String TAG = "21Weight";
     private LineChart chart;
     private FloatingActionButton addButton;
     private EditText dateText;
     private final Calendar myCalendar = Calendar.getInstance();
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
-    private TextView weekPoints;
+    private TextView monthWeight;
     private TextView daysLeft;
     private Boolean initializing = true;
-    private ArrayList<Points> valors;
+    private ArrayList<Weight> valors;
     private Calendar date;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
@@ -58,8 +59,8 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         date = Calendar.getInstance();
 
         refreshGraph();
-        thisWeekInitialize();
-        addPoints();
+        thismonthInitialize();
+        addWeight();
         graphSetup();
 
     }
@@ -72,34 +73,34 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         //for (int i = 0; i < 5; i++) {
-        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+        RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
         //  date.add(Calendar.DAY_OF_MONTH, -7);
         //}
 
     }
 
-    private void checkReceived(Points punt) {
+    private void checkReceived(Weight punt) {
 
 
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
 
-        if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek());
+        if (!punt.getTimestamp().equals(sdf.format(date.getTime()))) {
+            RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
+            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getWeight() + "  " + punt.getTimestamp());
         } else {
-            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
+            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getWeight() + "  " + punt.getTimestamp());
             valors.add(punt);
             date.add(Calendar.DAY_OF_MONTH, -7);
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+            RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
 
         }
 
 
     }
 
-    private void addPoints() {
+    private void addWeight() {
         addButton = (FloatingActionButton) findViewById(R.id.floatingButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +162,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
                         int exercici = ExerciceCheck.isChecked() ? 1 : 0;
                         int eat = EatCheck.isChecked() ? 1 : 0;
                         int drink = DrinkCheck.isChecked() ? 1 : 0;
-                        RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), WeightActivity.this);
+                        RestAPIManager.getInstance().postWeight(new Weight(), WeightActivity.this);
                         dialog.dismiss();
 
                     }
@@ -216,11 +217,11 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
         ArrayList<Entry> values = new ArrayList<>();
 
-        ArrayList<Points> valors2 = new ArrayList<>(valors);
+        ArrayList<Weight> valors2 = new ArrayList<>(valors);
         Collections.reverse(valors2);
         int i = 0;
-        for (Points val : valors2) {
-            values.add(new Entry(i, val.getPoints().intValue(), getResources().getDrawable(R.drawable.logo)));
+        for (Weight val : valors2) {
+            values.add(new Entry(i, val.getWeight().intValue(), getResources().getDrawable(R.drawable.logo)));
             i++;
         }
 
@@ -262,28 +263,28 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
     }
 
-    private void thisWeekInitialize() {
+    private void thismonthInitialize() {
         Calendar cal = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-        //RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
-        weekPoints = (TextView) findViewById(R.id.text_points);
-        weekPoints.setText("-");
+        //RestAPIManager.getInstance().getWeightBymonth(sdf.format(cal.getTime()), this);
+        monthWeight = (TextView) findViewById(R.id.text_points);
+        monthWeight.setText("-");
     }
 
-    private int daysLeftThisWeek(Points points) {
-        Calendar week = Calendar.getInstance();
+    private int daysLeftThismonth(Weight Weight) {
+        Calendar month = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         try {
-            week.setTime(sdf.parse(points.getWeek()));
+            month.setTime(sdf.parse(Weight.getTimestamp()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Calendar now = Calendar.getInstance();
 
-        long difference = now.getTimeInMillis() - week.getTimeInMillis();
+        long difference = now.getTimeInMillis() - month.getTimeInMillis();
         int days = (int) (difference / (1000 * 60 * 60 * 24));
 
 
@@ -292,9 +293,24 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
     @Override
     public void onPostPoints(Points points) {
+
+    }
+
+    @Override
+    public void onGetPoints(Points points) {
+
+    }
+
+    @Override
+    public void onPostBlood(Blood blood) {
+
+    }
+
+    @Override
+    public void onPostWeight(Weight Weight) {
         new AlertDialog.Builder(this)
-                .setTitle("Points added")
-                .setMessage(points.toString())
+                .setTitle("Weight added")
+                .setMessage(Weight.toString())
                 .show();
 
 
@@ -303,17 +319,17 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     }
 
     @Override
-    public synchronized void onGetPoints(Points points) {
+    public synchronized void onGetWeight(Weight Weight) {
 
-        Points punt = points;
+        Weight punt = Weight;
 
 
         if (initializing) {
-            String strI = "" + punt.getPoints().toString();
-            weekPoints.setText(strI);
+            String strI = "" + punt.getWeight().toString();
+            monthWeight.setText(strI);
 
 
-            int days = daysLeftThisWeek(points);
+            int days = daysLeftThismonth(Weight);
             if (days == 1) {
                 daysLeft.setText(days + " day left");
             } else {
@@ -333,25 +349,12 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
     }
 
-    @Override
-    public void onPostBlood(Blood blood) {
-
-    }
 
     @Override
     public void onGetBlood(Blood blood) {
 
     }
 
-    @Override
-    public void onPostWeight(Weight weight) {
-
-    }
-
-    @Override
-    public void onGetWeight(Weight weight) {
-
-    }
 
     @Override
     public void onLoginSuccess(UserToken userToken) {
@@ -362,7 +365,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     public void onFailure(Throwable t) {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+        RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
 
     }
 }
