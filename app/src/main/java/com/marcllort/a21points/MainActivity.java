@@ -29,6 +29,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private TextView weekPoints;
     private TextView daysLeft;
     private Boolean initializing = true;
-    private ArrayList<Integer> valors;
+    private ArrayList<Points> valors;
+    private Calendar date;
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
         valors = new ArrayList<>();
+        date = Calendar.getInstance();
 
         refreshGraph();
         thisWeekInitialize();
@@ -72,13 +75,33 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         Calendar date = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        for (int i = 0; i < 5; i++) {
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-            date.add(Calendar.DAY_OF_MONTH, -7);
-        }
+        //for (int i = 0; i < 5; i++) {
+        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+        //  date.add(Calendar.DAY_OF_MONTH, -7);
+        //}
 
     }
 
+    private void checkReceived(Points punt) {
+
+
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+
+
+        if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
+            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek());
+        } else {
+            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
+            valors.add(punt);
+            date.add(Calendar.DAY_OF_MONTH, -7);
+            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+
+        }
+
+
+    }
 
     private void addPoints() {
         addButton = (FloatingActionButton) findViewById(R.id.floatingButton);
@@ -142,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                         int exercici = ExerciceCheck.isChecked() ? 1 : 0;
                         int eat = EatCheck.isChecked() ? 1 : 0;
                         int drink = DrinkCheck.isChecked() ? 1 : 0;
-                        System.out.println(dateText.getText().toString());
                         RestAPIManager.getInstance().postPoints(new Points(dateText.getText().toString(), exercici, eat, drink, mNotes.getText().toString()), MainActivity.this);
                         dialog.dismiss();
 
@@ -197,23 +219,15 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private void setData(int count, float range) {
 
         ArrayList<Entry> values = new ArrayList<>();
-        Calendar date = Calendar.getInstance();
 
-
-        //values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
-
-        ArrayList<Integer> valors2 = new ArrayList<>(valors);
+        ArrayList<Points> valors2 = new ArrayList<>(valors);
         Collections.reverse(valors2);
         int i = 0;
-        for (Integer val : valors2) {
-            values.add(new Entry(i, val.intValue(), getResources().getDrawable(R.drawable.logo)));
+        for (Points val : valors2) {
+            values.add(new Entry(i, val.getPoints().intValue(), getResources().getDrawable(R.drawable.logo)));
             i++;
         }
 
-        /*values.add(new Entry(0, 2, getResources().getDrawable(R.drawable.logo)));
-        values.add(new Entry(1, 5, getResources().getDrawable(R.drawable.logo)));
-        values.add(new Entry(2, 3, getResources().getDrawable(R.drawable.logo)));
-        values.add(new Entry(3, 1, getResources().getDrawable(R.drawable.logo)));*/
 
         LineDataSet set1;
 
@@ -257,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-        System.out.println(sdf.format(cal.getTime()));
         //RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
         weekPoints = (TextView) findViewById(R.id.text_points);
         weekPoints.setText("-");
@@ -284,27 +297,23 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     @Override
     public void onPostPoints(Points points) {
         new AlertDialog.Builder(this)
-                .setTitle("POST POINTS")
+                .setTitle("Points added")
                 .setMessage(points.toString())
                 .show();
 
 
         refreshGraph();
+        date = Calendar.getInstance();
     }
 
     @Override
     public synchronized void onGetPoints(Points points) {
 
-        Integer punt = points.getPoints();
-
-        new AlertDialog.Builder(this)
-                .setTitle(" POINTS")
-                .setMessage(punt.toString())
-                .show();
+        Points punt = points;
 
 
         if (initializing) {
-            String strI = "" + punt.toString();
+            String strI = "" + punt.getPoints().toString();
             weekPoints.setText(strI);
 
 
@@ -316,13 +325,13 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             }
             initializing = false;
 
-            valors.add(punt);
-
+            checkReceived(punt);
         } else {
-            valors.add(punt);
-            System.out.println(Arrays.toString(valors.toArray()));
-            setData(10, 6);
-            chart.invalidate();
+            if (valors.size() < 6) {
+                checkReceived(punt);
+                setData(10, 6);
+                chart.invalidate();
+            }
 
         }
 
@@ -335,10 +344,9 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     @Override
     public void onFailure(Throwable t) {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
 
-        new AlertDialog.Builder(this)
-                .setTitle("Points")
-                .setMessage("falla:" + t.getMessage())
-                .show();
     }
 }
