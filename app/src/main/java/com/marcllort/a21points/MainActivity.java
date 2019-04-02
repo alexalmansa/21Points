@@ -45,6 +45,13 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private ArrayList<Points> valors;
     private Calendar date;
 
+    //preferences custom dialog
+    private TextView textPreferences;
+    private EditText points_goal;
+    private EditText weightUnits;
+    private Button addButtonPreferences;
+
+
     //Farem servir el MainActivity com un gestor de les diferents activitats
 
     @Override
@@ -63,10 +70,21 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         refreshGraph();
         thisWeekInitialize();
         addPoints();
+        preferencesDialog();
         graphSetup();
 
     }
 
+    private void preferencesDialog(){
+        Preferences preferences = new Preferences();
+
+        points_goal = (EditText) findViewById(R.id.weekly_points_goal2);
+        int numero = Integer.parseInt(String.valueOf(points_goal));
+        preferences.setWeeklyGoal(numero);
+
+        weightUnits = findViewById(R.id.weight_units);
+        preferences.setWeightUnits(weightUnits.toString());
+    }
 
     private void refreshGraph() {
         initializing = true;

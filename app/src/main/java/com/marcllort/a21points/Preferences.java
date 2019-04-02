@@ -17,6 +17,8 @@ public class Preferences {
     @Expose
     private String weightUnits;
 
+
+
     public Integer getId() {
         return id;
     }
@@ -48,5 +50,4 @@ public class Preferences {
     public void setWeightUnits(String weightUnits) {
         this.weightUnits = weightUnits;
     }
-
 }

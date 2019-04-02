@@ -39,12 +39,24 @@
             android:id="@+id/text_daysLeft"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="94dp"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="X days left"
             android:textColor="@color/white"
-            android:textSize="16dip" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/text_preferences"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="94dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="start"
+            android:text="Objectives: "
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="fill_parent"

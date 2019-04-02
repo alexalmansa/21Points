@@ -21,6 +21,10 @@
     <string name="error_user">Username is empty</string>
     <string name="error_repass">Passwords do not match</string>
 
+    <!-- Preferences Custom Dialog -->
+    <string name="Add_Preferences">Add Preferences</string>
 
+    <string name="Weekly_Points_Goal">Weekly Points Goal</string>
+    <string name="Weight_Units">Weight Units</string>
 
 </resources>
