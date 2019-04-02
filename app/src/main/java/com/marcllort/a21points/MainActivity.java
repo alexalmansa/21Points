@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
         valors = new ArrayList<>();
         date = Calendar.getInstance();
+        firstDayWeek();
 
         refreshGraph();
         thisWeekInitialize();
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         initializing = true;
         valors = new ArrayList<>();
         Calendar date = Calendar.getInstance();
+        firstDayWeek();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         //for (int i = 0; i < 5; i++) {
@@ -78,6 +80,16 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         //  date.add(Calendar.DAY_OF_MONTH, -7);
         //}
 
+    }
+
+
+    private void firstDayWeek(){
+        date = Calendar.getInstance();
+
+        while (date.get(Calendar.DAY_OF_WEEK) > date.getFirstDayOfWeek()) {
+            date.add(Calendar.DATE, -1); // Substract 1 day until first day of week.
+        }
+        date.add(Calendar.DATE, +1);
     }
 
     private void checkReceived(Points punt) {
@@ -89,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
             RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek());
+            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek() +"demamant:"+sdf.format(date.getTime()));
         } else {
             System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
             valors.add(punt);
@@ -301,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
 
         refreshGraph();
-        date = Calendar.getInstance();
+        firstDayWeek();
     }
 
     @Override
