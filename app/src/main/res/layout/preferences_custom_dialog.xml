@@ -60,5 +60,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/shapelogin"
         android:text="Add"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:onClick="onSavePreferences"/>
 </LinearLayout>

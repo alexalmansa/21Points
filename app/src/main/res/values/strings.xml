@@ -26,5 +26,7 @@
 
     <string name="Weekly_Points_Goal">Weekly Points Goal</string>
     <string name="Weight_Units">Weight Units</string>
+    <string name="key_weight">WEIGHTUNITSGOAL</string>
+    <string name="key_points">POINTSGOAL</string>
 
 </resources>

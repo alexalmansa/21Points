@@ -3,7 +3,7 @@ package com.marcllort.a21points;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Preferences {
+public class Preferences{
     @SerializedName("id")
     @Expose
     private Integer id;

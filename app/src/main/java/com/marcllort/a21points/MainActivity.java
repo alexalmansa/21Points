@@ -3,6 +3,7 @@ package com.marcllort.a21points;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 
+import android.content.Intent;
 import android.graphics.Color;
 
 import android.icu.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -45,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private ArrayList<Points> valors;
     private Calendar date;
 
-    //preferences custom dialog
-    private TextView textPreferences;
-    private EditText points_goal;
-    private EditText weightUnits;
-    private Button addButtonPreferences;
+    //main activity
+    private TextView main_pointsGoal;
+    private TextView main_weightUnitsGoal;
+
+
 
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         setContentView(R.layout.activity_main);
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
+
         valors = new ArrayList<>();
         date = Calendar.getInstance();
         firstDayWeek();
@@ -76,14 +79,61 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
     private void preferencesDialog(){
-        Preferences preferences = new Preferences();
 
-        points_goal = (EditText) findViewById(R.id.weekly_points_goal2);
-        int numero = Integer.parseInt(String.valueOf(points_goal));
-        preferences.setWeeklyGoal(numero);
+        main_weightUnitsGoal = (TextView) findViewById(R.id.tv_main_weightUnitsGoal);
+        main_pointsGoal = (TextView) findViewById(R.id.tv_main_pointsGoal);
 
-        weightUnits = findViewById(R.id.weight_units);
-        preferences.setWeightUnits(weightUnits.toString());
+        main_pointsGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
+                startActivityForResult(intent, 0);
+
+                Bundle returnedInfo = intent.getExtras();
+                main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
+                main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 15));
+
+                /*
+                Preferences preferences = new Preferences();
+                points_goal = findViewById(R.id.weekly_points_goal2);
+                int numero = Integer.parseInt(String.valueOf(points_goal));
+                preferences.setWeeklyGoal(numero);
+
+                weightUnits = findViewById(R.id.weight_units);
+                preferences.setWeightUnits(weightUnits.toString());
+
+                main_weightUnitsGoal.setText(preferences.getWeightUnits());
+                main_pointsGoal.setText(preferences.getWeeklyGoal());
+                 */
+            }
+        });
+
+        main_weightUnitsGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
+                startActivityForResult(intent, 0);
+
+                Bundle returnedInfo = intent.getExtras();
+                main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
+                main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 0));
+
+                /*
+                Preferences preferences = new Preferences();
+                points_goal = findViewById(R.id.weekly_points_goal2);
+                int numero = Integer.parseInt(String.valueOf(points_goal));
+                preferences.setWeeklyGoal(numero);
+
+                weightUnits = findViewById(R.id.weight_units);
+                preferences.setWeightUnits(weightUnits.toString());
+
+                main_weightUnitsGoal.setText(preferences.getWeightUnits());
+                main_pointsGoal.setText(preferences.getWeeklyGoal());
+                 */
+            }
+        });
     }
 
     private void refreshGraph() {
