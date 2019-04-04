@@ -12,45 +12,55 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="sans-serif-thin"
         android:text="@string/Add_Preferences"
         android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="15dp"/>
+        android:textStyle="bold" />
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Weekly_Points_Goal"
-        android:textStyle="bold"
-        android:textSize="15sp"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Weekly_Points_Goal"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/weekly_points_goal2"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="numberPassword"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/weekly_points_goal2"
-        android:layout_width="36dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:inputType="numberPassword" />
-
-    <TextView
-        android:layout_marginTop="20dp"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Weight_Units"
-        android:textStyle="bold"
-        android:textSize="15sp"/>
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/Weight_Units"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/weight_units"
-        android:layout_width="36dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:inputType="numberPassword" />
+        <EditText
+            android:id="@+id/weight_units"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="numberPassword"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
     <Button

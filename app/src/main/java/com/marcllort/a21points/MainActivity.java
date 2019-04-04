@@ -46,12 +46,13 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private Boolean initializing = true;
     private ArrayList<Points> valors;
     private Calendar date;
+    private EditText points_goal;
+    private EditText weightUnits;
+    private Button addButtonPreferences;
 
     //main activity
     private TextView main_pointsGoal;
     private TextView main_weightUnitsGoal;
-
-
 
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
@@ -78,7 +79,24 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     }
 
-    private void preferencesDialog(){
+    private void dialogBuilder() {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.preferences_custom_dialog, null);
+
+        points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
+        weightUnits = (EditText) mView.findViewById(R.id.weight_units);
+
+        addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+    }
+
+
+    private void preferencesDialog() {
 
         main_weightUnitsGoal = (TextView) findViewById(R.id.tv_main_weightUnitsGoal);
         main_pointsGoal = (TextView) findViewById(R.id.tv_main_pointsGoal);
@@ -87,12 +105,16 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
+                dialogBuilder();
+
+                /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
                 startActivityForResult(intent, 0);
 
                 Bundle returnedInfo = intent.getExtras();
                 main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
                 main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 15));
+                */
+
 
                 /*
                 Preferences preferences = new Preferences();
@@ -112,14 +134,15 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         main_weightUnitsGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogBuilder();
 
-                Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
+                /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
                 startActivityForResult(intent, 0);
 
                 Bundle returnedInfo = intent.getExtras();
                 main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
                 main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 0));
-
+                */
                 /*
                 Preferences preferences = new Preferences();
                 points_goal = findViewById(R.id.weekly_points_goal2);
@@ -151,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
 
-    private void firstDayWeek(){
+    private void firstDayWeek() {
         date = Calendar.getInstance();
 
         while (date.get(Calendar.DAY_OF_WEEK) > date.getFirstDayOfWeek()) {
@@ -169,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
             RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek() +"demamant:"+sdf.format(date.getTime()));
+            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek() + "demamant:" + sdf.format(date.getTime()));
         } else {
             System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
             valors.add(punt);

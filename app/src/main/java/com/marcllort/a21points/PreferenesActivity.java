@@ -43,8 +43,8 @@ class PreferenesActivity extends AppCompatActivity {
 
         preferences.setWeightUnits(weightUnits.toString());
 
-        bundle.putString(String.valueOf(R.string.key_weight), preferences.getWeightUnits());
-        bundle.putInt(String.valueOf(R.string.key_points), preferences.getWeeklyGoal());
+        //bundle.putString(String.valueOf(R.string.key_weight), preferences.getWeightUnits());
+        //bundle.putInt(String.valueOf(R.string.key_points), preferences.getWeeklyGoal());
 
         finish();
     }
