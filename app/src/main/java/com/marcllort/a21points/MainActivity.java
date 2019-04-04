@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private LineChart chart;
     private FloatingActionButton addButton;
     private EditText dateText;
-    private final Calendar myCalendar = Calendar.getInstance();
+    private final Calendar myCalendar = Calendar.getInstance(Locale.US);
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
     private TextView weekPoints;
     private TextView daysLeft;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
 
         valors = new ArrayList<>();
-        date = Calendar.getInstance();
+        date = Calendar.getInstance(Locale.US);
         firstDayWeek();
 
         refreshGraph();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private void refreshGraph() {
         initializing = true;
         valors = new ArrayList<>();
-        Calendar date = Calendar.getInstance();
+        Calendar date = (Calendar) Calendar.getInstance(Locale.US);
         firstDayWeek();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
 
     private void firstDayWeek() {
-        date = Calendar.getInstance();
+        date = Calendar.getInstance(Locale.US);
 
         while (date.get(Calendar.DAY_OF_WEEK) > date.getFirstDayOfWeek()) {
             date.add(Calendar.DATE, -1); // Substract 1 day until first day of week.
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
     private void thisWeekInitialize() {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(Locale.US);
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
     private int daysLeftThisWeek(Points points) {
-        Calendar week = Calendar.getInstance();
+        Calendar week = Calendar.getInstance(Locale.US);
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         try {
@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Calendar now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance(Locale.US);
 
         long difference = now.getTimeInMillis() - week.getTimeInMillis();
         int days = (int) (difference / (1000 * 60 * 60 * 24));
