@@ -40,12 +40,16 @@
             android:id="@+id/text_daysLeft"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="94dp"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="X days left"
             android:textColor="@color/white"
             android:textSize="16dip" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <org.honorato.multistatetogglebutton.MultiStateToggleButton
             android:id="@+id/mstb_multi_id"
@@ -57,6 +61,7 @@
             mstb:mstbPrimaryColor="@color/morat"
             mstb:mstbSecondaryColor="@color/accent"
             mstb:values="@array/parts_array" />
+    </LinearLayout>
 
         <TextView
             android:layout_width="fill_parent"

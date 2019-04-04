@@ -72,18 +72,26 @@
             android:textSize="14sp" />
 
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+    <org.honorato.multistatetogglebutton.MultiStateToggleButton
+        android:id="@+id/mstb_multi_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:gravity="center_vertical"
+        android:visibility="visible"
+        mstb:mstbPrimaryColor="@color/verd"
+        mstb:mstbSecondaryColor="@color/accent"
+        mstb:values="@array/parts_array"
+        android:background="@drawable/shapeblood"/>
+
+</LinearLayout>
 
 
-            <org.honorato.multistatetogglebutton.MultiStateToggleButton
-                android:id="@+id/mstb_multi_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:gravity="center_vertical"
-                android:visibility="visible"
-                mstb:mstbPrimaryColor="@color/verd"
-                mstb:mstbSecondaryColor="@color/accent"
-                mstb:values="@array/parts_array" />
 
         <TextView
             android:layout_width="fill_parent"

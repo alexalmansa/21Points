@@ -148,52 +148,20 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(BloodActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+                View mView = getLayoutInflater().inflate(R.layout.blood_preassure_custom_dialog, null);
 
 
-                Button mAdd = (Button) mView.findViewById(R.id.btnAdd2);
+                Button mAdd = (Button) mView.findViewById(R.id.btnAddPreassure);
 
 
-                final EditText mNotes = (EditText) mView.findViewById(R.id.etnotes);
+                final EditText mDiast = (EditText) mView.findViewById(R.id.blod_preassure_diast);
+                final EditText mSist = (EditText) mView.findViewById(R.id.blod_preassure_syst);
+
 
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
-
-                ExerciceCheck = (CheckBox) mView.findViewById(R.id.checkbox_exercice);
-                EatCheck = (CheckBox) mView.findViewById(R.id.checkbox_eat);
-                DrinkCheck = (CheckBox) mView.findViewById(R.id.checkbox_drink);
-
-
-                dateText = (EditText) mView.findViewById(R.id.etdate);
-                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        // TODO Auto-generated method stub
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, monthOfYear);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "yyyy-MM-dd"; //In which you need put here
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-
-                        dateText.setText(sdf.format(myCalendar.getTime()));
-                    }
-
-                };
-
-                dateText.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        new DatePickerDialog(BloodActivity.this, date, myCalendar
-                                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                    }
-                });
 
 
                 mAdd.setOnClickListener(new View.OnClickListener() {
@@ -201,14 +169,18 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
                     public void onClick(View view) {
 
 
-                        int exercici = ExerciceCheck.isChecked() ? 1 : 0;
-                        int eat = EatCheck.isChecked() ? 1 : 0;
-                        int drink = DrinkCheck.isChecked() ? 1 : 0;
-                        RestAPIManager.getInstance().postBlood(new Blood(), BloodActivity.this);
-                        dialog.dismiss();
+                        Blood blod= new Blood();
+                        int x = Integer.parseInt(mDiast.getText().toString());
+                        int y = Integer.parseInt(mSist.getText().toString());
+
+                        blod.setDiastolic(x);
+                        blod.setSystolic(y);
+                        RestAPIManager.getInstance().postBlood(blod,BloodActivity.this);
 
                     }
                 });
+
+
             }
         });
 
