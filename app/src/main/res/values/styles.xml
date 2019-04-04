@@ -49,6 +49,9 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="buttonStyle" parent="TextAppearance.AppCompat">
+        <item name="buttonStyle" >@android:style/Widget.Material.Button.Borderless</item>
+    </style>
 
 
 

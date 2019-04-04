@@ -87,7 +87,8 @@
         mstb:mstbPrimaryColor="@color/verd"
         mstb:mstbSecondaryColor="@color/accent"
         mstb:values="@array/parts_array"
-        android:background="@drawable/shapeblood"/>
+        android:background="@drawable/shapeblood"
+        />
 
 </LinearLayout>
 

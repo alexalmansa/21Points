@@ -176,7 +176,7 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
                         blod.setDiastolic(x);
                         blod.setSystolic(y);
                         RestAPIManager.getInstance().postBlood(blod,BloodActivity.this);
-
+                        dialog.dismiss();
                     }
                 });
 

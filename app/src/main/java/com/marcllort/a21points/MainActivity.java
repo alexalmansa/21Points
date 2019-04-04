@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
 
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+
         msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
             @Override
             public void onValueChanged(int position) {
