@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private EditText points_goal;
     private EditText weightUnits;
     private Button addButtonPreferences;
+    private ImageButton settings;
 
     //main activity
     private TextView main_pointsGoal;
@@ -98,10 +100,12 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     private void preferencesDialog() {
 
-        main_weightUnitsGoal = (TextView) findViewById(R.id.tv_main_weightUnitsGoal);
-        main_pointsGoal = (TextView) findViewById(R.id.tv_main_pointsGoal);
+        //main_weightUnitsGoal = (TextView) findViewById(R.id.tv_main_weightUnitsGoal);
+        //main_pointsGoal = (TextView) findViewById(R.id.tv_main_pointsGoal);
 
-        main_pointsGoal.setOnClickListener(new View.OnClickListener() {
+        settings = (ImageButton) findViewById(R.id.action_settings);
+
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -131,32 +135,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             }
         });
 
-        main_weightUnitsGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBuilder();
 
-                /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
-                startActivityForResult(intent, 0);
-
-                Bundle returnedInfo = intent.getExtras();
-                main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
-                main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 0));
-                */
-                /*
-                Preferences preferences = new Preferences();
-                points_goal = findViewById(R.id.weekly_points_goal2);
-                int numero = Integer.parseInt(String.valueOf(points_goal));
-                preferences.setWeeklyGoal(numero);
-
-                weightUnits = findViewById(R.id.weight_units);
-                preferences.setWeightUnits(weightUnits.toString());
-
-                main_weightUnitsGoal.setText(preferences.getWeightUnits());
-                main_pointsGoal.setText(preferences.getWeeklyGoal());
-                 */
-            }
-        });
     }
 
     private void refreshGraph() {
