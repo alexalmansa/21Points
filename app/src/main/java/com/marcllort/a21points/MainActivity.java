@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private ArrayList<Points> valors;
     private Calendar date;
     private EditText points_goal;
-    private EditText weightUnits;
+    private Spinner weightUnits;
     private Button addButtonPreferences;
     private ImageButton settings;
     private MultiStateToggleButton multiButton;
@@ -79,6 +79,13 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         valors = new ArrayList<>();
         date = Calendar.getInstance(Locale.US);
+
+        String[] arraySpinner = new String[] {
+                "1", "2", "3", "4", "5", "6", "7"
+        };
+
+
+
 
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
         msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
@@ -124,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         View mView = getLayoutInflater().inflate(R.layout.preferences_custom_dialog, null);
 
         points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
-        weightUnits = (EditText) mView.findViewById(R.id.weight_units);
+        weightUnits = (Spinner) mView.findViewById(R.id.spinner);
 
         addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
 

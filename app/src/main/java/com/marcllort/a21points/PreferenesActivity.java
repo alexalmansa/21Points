@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 class PreferenesActivity extends AppCompatActivity {
@@ -15,7 +16,7 @@ class PreferenesActivity extends AppCompatActivity {
     //preferences custom dialog
     private TextView textPreferences;
     private EditText points_goal;
-    private EditText weightUnits;
+    private Spinner weightUnits;
     private Button addButtonPreferences;
 
     @Override
@@ -26,7 +27,7 @@ class PreferenesActivity extends AppCompatActivity {
         bundle = savedInstanceState;
 
         points_goal = findViewById(R.id.weekly_points_goal2);
-        weightUnits = findViewById(R.id.weight_units);
+        weightUnits = findViewById(R.id.spinner);
 
         addButtonPreferences = (Button) findViewById(R.id.btnAddPreferences);
 
