@@ -27,6 +27,12 @@
         <activity
             android:name=".SignupActivity"
             android:theme="@style/SignupActivityTheme" />
+        <activity
+            android:name=".WeightActivity"
+            android:theme="@style/SignupActivityTheme" />
+        <activity
+            android:name=".BloodActivity"
+            android:theme="@style/SignupActivityTheme" />
 
     </application>
 

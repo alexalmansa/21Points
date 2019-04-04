@@ -15,14 +15,6 @@
         android:orientation="vertical"
         android:paddingTop="16dp">
 
-        <ImageButton
-            android:id="@+id/action_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            mstb:srcCompat="@drawable/baseline_settings_white_18dp"
-            android:background="@null" />
-
 
         <TextView
             android:id="@+id/text_week"
@@ -33,7 +25,17 @@
             android:gravity="center"
             android:text="This week"
             android:textColor="@color/white"
-            android:textSize="24dip" />
+            android:textSize="24dip"
+            />
+
+        <ImageButton
+            android:id="@+id/action_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@null"
+            mstb:srcCompat="@drawable/baseline_settings_white_18dp"
+            android:paddingRight="15dp"/>
 
         <TextView
             android:id="@+id/text_points"
@@ -70,22 +72,18 @@
             android:textSize="14sp" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+
 
             <org.honorato.multistatetogglebutton.MultiStateToggleButton
                 android:id="@+id/mstb_multi_id"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
                 android:visibility="visible"
-                app:layout_anchorGravity="bottom|center_horizontal|end"
                 mstb:mstbPrimaryColor="@color/verd"
                 mstb:mstbSecondaryColor="@color/accent"
                 mstb:values="@array/parts_array" />
-        </LinearLayout>
 
         <TextView
             android:layout_width="fill_parent"

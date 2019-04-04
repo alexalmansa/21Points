@@ -13,13 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -27,6 +31,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
+import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private EditText weightUnits;
     private Button addButtonPreferences;
     private ImageButton settings;
+    private MultiStateToggleButton multiButton;
 
     //main activity
     private TextView main_pointsGoal;
@@ -71,7 +79,32 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         valors = new ArrayList<>();
         date = Calendar.getInstance(Locale.US);
+
+        MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+        msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                Log.d(TAG, "Position: " + position);
+                switch (position){
+                    case 1:
+                        Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(blood);
+                        finish();
+                        break;
+                    case 2:
+                        Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(weight);
+                        finish();
+                }
+            }
+        });
+
+        msb_button.setValue(0);
         firstDayWeek();
+
+
 
         refreshGraph();
         thisWeekInitialize();
@@ -80,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         graphSetup();
 
     }
+
 
     private void dialogBuilder() {
 

@@ -2,6 +2,7 @@ package com.marcllort.a21points;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
@@ -23,6 +24,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
+import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -52,7 +56,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         getSupportActionBar().hide();                    //Fora actionbar
 
         Log.d(TAG, "onCreate(Bundle) called");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_weight);
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
         valors = new ArrayList<>();
@@ -62,6 +66,28 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         thismonthInitialize();
         addWeight();
         graphSetup();
+
+        MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+        msb_button.setValue(2);
+        msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                Log.d(TAG, "Position: " + position);
+                switch (position){
+                    case 0:
+                        Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(main);
+                        finish();
+                        break;
+                    case 1:
+                        Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(blood);
+                        finish();
+                }
+            }
+        });
 
     }
 

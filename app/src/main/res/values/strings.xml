@@ -25,7 +25,6 @@
         <item>Points</item>
         <item>Blod Preassure</item>
         <item>Weight</item>
-        <item>Mars</item>
     </string-array>
     <!-- Preferences Custom Dialog -->
     <string name="Add_Preferences">Add Preferences</string>
@@ -34,5 +33,10 @@
     <string name="Weight_Units">Weight Units</string>
     <string name="key_weight">WEIGHTUNITSGOAL</string>
     <string name="key_points">POINTSGOAL</string>
+    <!--Spinner Unitats -->
+    <string-array name="numbers">
+        <item>Kg</item>
+        <item>Pounds</item>
+    </string-array>
 
 </resources>

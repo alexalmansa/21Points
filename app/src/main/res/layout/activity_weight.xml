@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradientweight">
+    android:background="@drawable/gradientweight"
+    xmlns:mstb="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,6 +46,17 @@
             android:text="X days left"
             android:textColor="@color/white"
             android:textSize="16dip" />
+
+        <org.honorato.multistatetogglebutton.MultiStateToggleButton
+            android:id="@+id/mstb_multi_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:gravity="center_vertical"
+            android:visibility="visible"
+            mstb:mstbPrimaryColor="@color/blau"
+            mstb:mstbSecondaryColor="@color/accent"
+            mstb:values="@array/parts_array" />
 
         <TextView
             android:layout_width="fill_parent"
