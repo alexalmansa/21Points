@@ -16,6 +16,15 @@
         android:paddingTop="16dp">
 
 
+        <ImageButton
+            android:id="@+id/action_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:paddingRight="15dp"
+            mstb:srcCompat="@drawable/baseline_settings_white_18dp" />
+
         <TextView
             android:id="@+id/text_week"
             android:layout_width="fill_parent"
@@ -27,15 +36,6 @@
             android:textColor="@color/white"
             android:textSize="24dip"
             />
-
-        <ImageButton
-            android:id="@+id/action_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@null"
-            mstb:srcCompat="@drawable/baseline_settings_white_18dp"
-            android:paddingRight="15dp"/>
 
         <TextView
             android:id="@+id/text_points"
