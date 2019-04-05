@@ -24,7 +24,6 @@ public interface RestAPIService {
     @POST("/api/weights")
     Call<Weight> postWeight(@Body Weight weight, @Header("Authorization") String token);
 
-
     @GET("/api/points/{id}")
     Call<Points> getPointsById(@Path("id") Integer id, @Header("Authorization") String token);
 
@@ -42,5 +41,11 @@ public interface RestAPIService {
 
     @GET("/api/weight-by-month/{date}")
     Call<Weight> getWeightByMonth(@Path("date") String date, @Header("Authorization") String token);
+
+    @POST("/api/preferences")
+    Call<Preferences> postPreferences(@Body Preferences preferences, @Header("Authorization") String token);
+
+    @GET("/api/preferences/{id}")
+    Call<Preferences> getPreferencesById(@Path("id") Integer id, @Header("Authorization") String token);
 
 }

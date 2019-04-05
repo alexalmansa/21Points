@@ -18,6 +18,10 @@ public class Preferences{
     private String weightUnits;
 
 
+    public Preferences(Integer weeklyGoal, String weightUnits) {
+        this.weeklyGoal = weeklyGoal;
+        this.weightUnits = weightUnits;
+    }
 
     public Integer getId() {
         return id;

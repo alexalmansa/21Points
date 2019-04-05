@@ -270,4 +270,46 @@ public class RestAPIManager {
         });
     }
 
+    public synchronized void getPreferencesById(Integer id, final RestAPICallBack restAPICallBack) {
+        Call<Preferences> call = restApiService.getPreferencesById(id, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Preferences>() {
+            @Override
+            public void onResponse(Call<Preferences> call, Response<Preferences> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onGetPreferences(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Preferences> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
+
+    public synchronized void postPreferences(Preferences preferences, final RestAPICallBack restAPICallBack) {
+        final Preferences newUserPrefences = preferences;
+        Call<Preferences> call = restApiService.postPreferences(newUserPrefences, "Bearer " + userToken.getIdToken());
+
+        call.enqueue(new Callback<Preferences>() {
+            @Override
+            public void onResponse(Call<Preferences> call, Response<Preferences> response) {
+
+                if (response.isSuccessful()) {
+                    restAPICallBack.onPostPreferences(response.body());
+                } else {
+                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Preferences> call, Throwable t) {
+                restAPICallBack.onFailure(t);
+            }
+        });
+    }
 }

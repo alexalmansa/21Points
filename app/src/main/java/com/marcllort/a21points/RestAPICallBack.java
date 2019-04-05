@@ -9,4 +9,6 @@ public interface RestAPICallBack {
     void onGetWeight(Weight weight);
     void onLoginSuccess(UserToken userToken);
     void onFailure(Throwable t);
+    void onPostPreferences(Preferences preferences);
+    void onGetPreferences(Preferences preferences);
 }

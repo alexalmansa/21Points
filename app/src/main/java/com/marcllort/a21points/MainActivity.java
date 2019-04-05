@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private Button addButtonPreferences;
     private ImageButton settings;
     private MultiStateToggleButton multiButton;
+    private AlertDialog dialog;
 
     //main activity
     private TextView main_pointsGoal;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         firstDayWeek();
 
 
-
+        dialogBuilder();
         refreshGraph();
         thisWeekInitialize();
         addPoints();
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private void dialogBuilder() {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        //cogemos el dialog y lo ponemos como view
         View mView = getLayoutInflater().inflate(R.layout.preferences_custom_dialog, null);
 
         points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
@@ -152,9 +154,13 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
 
+        //setOnclickListener, guardarme las varaibles d¡que el user intriduce y crear las preferenciasmeidante
+        //el getPreferencesById
+        //RestAPIManager.getInstance().postPreferences(new Preferences(), MainActivity.this);
+
         mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.show();
+        //dialog = mBuilder.create();
+        //dialog.show();
 
     }
 
@@ -169,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             @Override
             public void onClick(View view) {
 
-                dialogBuilder();
+                dialog.show();
 
                 /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
                 startActivityForResult(intent, 0);
@@ -506,6 +512,16 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+
+    }
+
+    @Override
+    public void onPostPreferences(Preferences preferences) {
+
+    }
+
+    @Override
+    public void onGetPreferences(Preferences preferences) {
 
     }
 }
