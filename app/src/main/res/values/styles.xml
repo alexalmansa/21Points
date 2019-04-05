@@ -22,8 +22,14 @@
         <item name="colorPrimaryDark">@color/verd</item>
         <item name="colorPrimary">@color/verd</item>
         <item name="colorAccent">@color/verd</item>
+    </style>
 
+    <style name="BloodActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/morat</item>
+    </style>
 
+    <style name="WeightActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/blau</item>
     </style>
 
     <!-- Textview Style -->

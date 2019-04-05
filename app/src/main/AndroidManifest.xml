@@ -29,10 +29,10 @@
             android:theme="@style/SignupActivityTheme" />
         <activity
             android:name=".WeightActivity"
-            android:theme="@style/SignupActivityTheme" />
+            android:theme="@style/WeightActivityTheme" />
         <activity
             android:name=".BloodActivity"
-            android:theme="@style/SignupActivityTheme" />
+            android:theme="@style/BloodActivityTheme" />
 
     </application>
 

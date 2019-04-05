@@ -80,14 +80,42 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         valors = new ArrayList<>();
         date = Calendar.getInstance(Locale.US);
 
+
+
+
+
+        multiStateToggle();
+
+
+
+
+        firstDayWeek();
+
+
+
+        refreshGraph();
+        thisWeekInitialize();
+        addPoints();
+        preferencesDialog();
+        graphSetup();
+
+    }
+
+
+    private void multiStateToggle(){
         String[] arraySpinner = new String[] {
                 "1", "2", "3", "4", "5", "6", "7"
         };
-
-
-
-
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+        /*ImageButton button1 = (ImageButton) getLayoutInflater().inflate(R.layout.btn_image, msb_button, false);
+        button1.setImageResource(R.drawable.points);
+        ImageButton button2 = (ImageButton) getLayoutInflater().inflate(R.layout.btn_image, msb_button, false);
+        button2.setImageResource(R.drawable.blood);
+        ImageButton button3 = (ImageButton) getLayoutInflater().inflate(R.layout.btn_image, msb_button, false);
+        button3.setImageResource(R.drawable.weight);
+
+        View[] buttons = new View[] {button1, button2, button3};
+        msb_button.setButtons(buttons, new boolean[buttons.length]);*/
 
         msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
             @Override
@@ -111,20 +139,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 }
             }
         });
-
         msb_button.setValue(0);
-        firstDayWeek();
-
-
-
-        refreshGraph();
-        thisWeekInitialize();
-        addPoints();
-        preferencesDialog();
-        graphSetup();
-
     }
-
 
     private void dialogBuilder() {
 
@@ -141,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         dialog.show();
 
     }
-
 
     private void preferencesDialog() {
 
@@ -196,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         //}
 
     }
-
 
     private void firstDayWeek() {
         date = Calendar.getInstance(Locale.US);
