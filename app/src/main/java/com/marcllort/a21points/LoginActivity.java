@@ -222,5 +222,15 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();*/
     }
+
+    @Override
+    public void onPostPreferences(Preferences preferences) {
+
+    }
+
+    @Override
+    public void onGetPreferences(Preferences preferences) {
+
+    }
 }
 

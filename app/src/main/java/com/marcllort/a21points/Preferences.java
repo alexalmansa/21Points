@@ -23,6 +23,10 @@ public class Preferences{
         this.weightUnits = weightUnits;
     }
 
+    public Preferences() {
+
+    }
+
     public Integer getId() {
         return id;
     }

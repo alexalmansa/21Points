@@ -398,4 +398,14 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
 
     }
+
+    @Override
+    public void onPostPreferences(Preferences preferences) {
+
+    }
+
+    @Override
+    public void onGetPreferences(Preferences preferences) {
+
+    }
 }

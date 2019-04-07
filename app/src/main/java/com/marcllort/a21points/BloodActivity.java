@@ -381,4 +381,14 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
         RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
 
     }
+
+    @Override
+    public void onPostPreferences(Preferences preferences) {
+
+    }
+
+    @Override
+    public void onGetPreferences(Preferences preferences) {
+
+    }
 }
