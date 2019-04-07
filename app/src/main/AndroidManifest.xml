@@ -34,6 +34,7 @@
             android:name=".BloodActivity"
             android:theme="@style/BloodActivityTheme" />
 
+
     </application>
 
 </manifest>

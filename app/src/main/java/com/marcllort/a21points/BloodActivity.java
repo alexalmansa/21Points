@@ -44,7 +44,7 @@ import java.util.Comparator;
 import java.util.Locale;
 
 
-public class BloodActivity extends AppCompatActivity implements RestAPICallBack {
+public  class BloodActivity extends AppCompatActivity implements RestAPICallBack {
 
     private static final String TAG = "21Blood";
     private LineChart chart;

@@ -79,8 +79,8 @@
 
     <org.honorato.multistatetogglebutton.MultiStateToggleButton
         android:id="@+id/mstb_multi_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dip"
         android:gravity="center_vertical"
         android:visibility="visible"
@@ -88,6 +88,8 @@
         mstb:mstbSecondaryColor="@color/accent"
         mstb:values="@array/parts_array"
         android:background="@drawable/shapeblood"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         />
 
 </LinearLayout>
@@ -129,7 +131,9 @@
         android:src="@drawable/baseline_add_white_18dp"
         app:layout_anchorGravity="bottom|right|end"
         tools:layout_editor_absoluteX="309dp"
-        tools:layout_editor_absoluteY="436dp" />
+        tools:layout_editor_absoluteY="436dp"
+        android:drawable="@drawable/shapelogin"
+        />
 
 
 </RelativeLayout>

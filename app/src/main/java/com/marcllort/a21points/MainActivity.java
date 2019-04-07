@@ -3,6 +3,7 @@ package com.marcllort.a21points;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
@@ -39,6 +40,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
+import android.view.LayoutInflater;
+
 
 
 public class MainActivity extends AppCompatActivity implements RestAPICallBack {
@@ -104,19 +107,21 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
 
     private void multiStateToggle(){
-        String[] arraySpinner = new String[] {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                String[] arraySpinner = new String[] {
                 "1", "2", "3", "4", "5", "6", "7"
         };
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
-        /*ImageButton button1 = (ImageButton) getLayoutInflater().inflate(R.layout.btn_image, msb_button, false);
+        ImageButton button1 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button1.setImageResource(R.drawable.points);
-        ImageButton button2 = (ImageButton) getLayoutInflater().inflate(R.layout.btn_image, msb_button, false);
+        ImageButton button2 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button2.setImageResource(R.drawable.blood);
-        ImageButton button3 = (ImageButton) getLayoutInflater().inflate(R.layout.btn_image, msb_button, false);
+        ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button3.setImageResource(R.drawable.weight);
 
         View[] buttons = new View[] {button1, button2, button3};
-        msb_button.setButtons(buttons, new boolean[buttons.length]);*/
+        msb_button.setButtons(buttons, new boolean[buttons.length]);
 
         msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
             @Override
