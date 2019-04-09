@@ -112,17 +112,18 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
                         Intent main = new Intent(getApplicationContext(), MainActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(main);
-                        finish();
-                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
 
+                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
+                        finish();
                         break;
                     case 2:
                         Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(weight);
-                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
-
                         finish();
+                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_out_left);
+
+
                 }
             }
         });

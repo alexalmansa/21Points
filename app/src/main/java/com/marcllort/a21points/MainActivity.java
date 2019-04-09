@@ -129,14 +129,14 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                         Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(blood);
-                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
+                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_out_left);
                         finish();
                         break;
                     case 2:
                         Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(weight);
-                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
+                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_out_left);
 
                         finish();
                 }
