@@ -4,6 +4,9 @@ package com.marcllort.a21points;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Clase que contiene todos los datos referentes a un usuario
+ */
 public class User {
 
     @SerializedName("id")
@@ -34,42 +37,82 @@ public class User {
     @Expose
     private Object resetDate;
 
+    /**
+     * Getter del id del usuario
+     * @return identificador numerico correspondiente del usuario
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Setter del id del usuario
+     * @param id recibe el identificador numérico del usuario
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Getter del nombre del username del usuario
+     * @return String que contiene el login del usuario
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Setter del login del usuario
+     * @param login String que contiene el login del usuario
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * Getter del nombre del usuario
+     * @return String que contiene el nombre del usuario
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Setter del nombre del usuario
+     * @param firstName String que contiene el nombre del usuario
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Getter del apellido del usuario
+     * @return Retorna un String que contiene el apellido del usuario
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Setter del apellido del usuario
+     * @param lastName recibe un String que contiene el apellido del usuario
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Getter del email con el que esta registrado el usuario
+     * @return devuelve String que contiene el email del usuario
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Setter del correo electronico del usuario.
+     * @param email recibe un String que contiene el correo electronico del usuario
+     */
     public void setEmail(String email) {
         this.email = email;
     }

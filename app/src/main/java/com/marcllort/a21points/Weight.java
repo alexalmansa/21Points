@@ -4,6 +4,9 @@ package com.marcllort.a21points;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Clase que contiene los datos referentes al peso
+ */
 public class Weight {
 
     @SerializedName("id")
@@ -19,30 +22,58 @@ public class Weight {
     @Expose
     private Integer weight;
 
+    /**
+     * Getter del identificador del peso con el que se esta tratando
+     * @return identificador númerico del peso
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Setter del identidicador del peso
+     * @param id identificador numerico de aquel peso
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Getter de la fecha del peso
+     * @return String que contiene el Timestamp de el peso
+     */
     public String getTimestamp() {
         return timestamp;
     }
 
+    /**
+     * Setter de la fecha del peso
+     * @param timestamp String que contiene la fecha del peso
+     */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Getter del usuario referente a aquel peso
+     * @return Usuario al que le corresponde aquel peso
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Setter del usuario al que pertenece el peso
+     * @param user el usuario
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Getter del valor numerico
+     * @return integer c
+     */
     public Integer getWeight() {
         return weight;
     }

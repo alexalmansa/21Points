@@ -120,11 +120,21 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
         }
     }
 
+    /**
+     * Función para comprobar si el email introducido por el usuario tiene una apariencia correcta
+     * @param email  dirección introducida
+     * @return booleano indicando si es correcto
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.length() > 2;
     }
 
+    /**
+     * Función que comprueba si la contraseña introducida cumple con la longitud mínima requerida
+     * @param password contraseña introducida
+     * @return booleano indicando si es correcto o no
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 3;
@@ -170,6 +180,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     }
 
+
     @Override
     public void onLoginSuccess(UserToken userToken) {
         /*new AlertDialog.Builder(this)
@@ -202,6 +213,10 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
         //finish();
     }
 
+    /**
+     * Función que se ejecuta si algo falla cuando el usuario intenta iniciar sesión
+     * @param t
+     */
     @Override
     public void onFailure(Throwable t) {
         //finish();
