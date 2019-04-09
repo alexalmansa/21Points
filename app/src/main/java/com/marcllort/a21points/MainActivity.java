@@ -9,7 +9,6 @@ import android.graphics.Color;
 
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
-import android.net.sip.SipSession;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,19 +32,14 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.sha.kamel.multitogglebutton.MultiToggleButton;
 
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
-import com.sha.kamel.multitogglebutton.MultiToggleButton;
-import com.sha.kamel.multitogglebutton.Selected;
-import com.sha.kamel.multitogglebutton.ToggleButton;
+import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.stream.Stream;
-
 import android.view.LayoutInflater;
 
 
@@ -115,12 +109,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private void multiStateToggle(){
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                String[] arraySpinner = new String[] {
-                "1", "2", "3", "4", "5", "6", "7"
-        };
-        MultiToggleButton msb_button = (MultiToggleButton) this.findViewById(R.id.mtb);
-
-
+        MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
         ImageButton button1 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button1.setImageResource(R.drawable.points);
         ImageButton button2 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
@@ -128,45 +117,33 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button3.setImageResource(R.drawable.weight);
 
+        View[] buttons = new View[] {button1, button2, button3};
+        msb_button.setButtons(buttons, new boolean[buttons.length]);
 
+        msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                Log.d(TAG, "Position: " + position);
+                switch (position){
+                    case 1:
+                        Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(blood);
+                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
+                        finish();
+                        break;
+                    case 2:
+                        Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(weight);
+                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
 
-
-
-
-
-
-
-
-
-
-        msb_button.setOnItemSelectedListener(listener1())
-                .setLabel("Points", 2);
-
-    }
-
-
-
-    private ToggleButton.OnItemSelectedListener listener1(){
-        return (toggleButton, item, index, label, selected) -> {
-            switch (index){
-                case 1:
-                    Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
-                    Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
-                    startActivity(blood);
-                    overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
-                    finish();
-                    break;
-                case 2:
-                    Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
-                    Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
-                    startActivity(weight);
-                    overridePendingTransition(R.transition.slide_in_right,R.transition.slide_in_right);
-
-                    finish();
+                        finish();
+                }
             }
-        };
+        });
+        msb_button.setValue(0);
     }
-
 
     private void dialogBuilder() {
 
@@ -204,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
                 /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
                 startActivityForResult(intent, 0);
-
                 Bundle returnedInfo = intent.getExtras();
                 main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
                 main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 15));
@@ -216,10 +192,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 points_goal = findViewById(R.id.weekly_points_goal2);
                 int numero = Integer.parseInt(String.valueOf(points_goal));
                 preferences.setWeeklyGoal(numero);
-
                 weightUnits = findViewById(R.id.weight_units);
                 preferences.setWeightUnits(weightUnits.toString());
-
                 main_weightUnitsGoal.setText(preferences.getWeightUnits());
                 main_pointsGoal.setText(preferences.getWeeklyGoal());
                  */

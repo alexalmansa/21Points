@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradientmain"
-    xmlns:mstb="http://schemas.android.com/apk/res-auto"
-    xmlns:mtb="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:mstb="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -74,27 +72,26 @@
             android:textSize="14sp" />
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
 
-    <com.sha.kamel.multitogglebutton.MultiToggleButton
-        android:id="@+id/mtb"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dip"
-        mtb:labels="@array/parts_array"
-        mtb:mtbScrollable="true"
-        mtb:mtbRoundedCorners="true"
-        mtb:mtbPressedColor="@color/verd"
-        mtb:mtbUnpressedColor="@color/orange"
-        mtb:mtbColorPressedText="@color/white"
-        mtb:mtbColorUnpressedText="@color/white"
-        mtb:mtbCornerRadius="8dp"
-        />
+            <org.honorato.multistatetogglebutton.MultiStateToggleButton
+                android:id="@+id/mstb_multi_id"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:visibility="visible"
+                mstb:mstbPrimaryColor="@color/verd"
+                mstb:mstbSecondaryColor="@color/accent"
+                mstb:values="@array/parts_array"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                />
 
-</LinearLayout>
+        </LinearLayout>
 
 
 

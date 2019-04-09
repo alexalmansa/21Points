@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserTokenManager {
 
-    private static final String BASE_URL = "http://192.168.1.2:9000/";
+    private static final String BASE_URL = "http://android.byted.xyz/";
     private static UserTokenManager ourInstance;
     private Retrofit retrofit;
     private TokenService tokenService;

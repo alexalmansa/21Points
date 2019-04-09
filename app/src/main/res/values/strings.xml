@@ -22,9 +22,9 @@
     <string name="error_repass">Passwords do not match</string>
 
     <string-array name="parts_array">
-        <item> </item>
-        <item> </item>
-        <item> </item>
+        <item> Points </item>
+        <item> Blod Preassure </item>
+        <item> Weight </item>
     </string-array>
 
     <!-- Preferences Custom Dialog -->

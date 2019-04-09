@@ -2,6 +2,7 @@ package com.marcllort.a21points;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
@@ -10,11 +11,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -66,8 +69,24 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         thismonthInitialize();
         addWeight();
         graphSetup();
+        MultiStateToggle();
+
+
+    }
+    private void MultiStateToggle(){
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+        ImageButton button1 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
+        button1.setImageResource(R.drawable.points);
+        ImageButton button2 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
+        button2.setImageResource(R.drawable.blood);
+        ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
+        button3.setImageResource(R.drawable.weight);
+
+        View[] buttons = new View[] {button1, button2, button3};
+        msb_button.setButtons(buttons, new boolean[buttons.length]);
+
         msb_button.setValue(2);
         msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
             @Override
@@ -92,9 +111,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
                 }
             }
         });
-
     }
-
 
     private void refreshGraph() {
         initializing = true;
