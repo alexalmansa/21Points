@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     @Override
     public void onLoginSuccess(UserToken userToken) {
+
         /*new AlertDialog.Builder(this)
                 .setTitle("Token")
                 .setMessage("token: "+ userToken.getIdToken())

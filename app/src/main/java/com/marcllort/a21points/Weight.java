@@ -72,12 +72,16 @@ public class Weight {
 
     /**
      * Getter del valor numerico
-     * @return integer c
+     * @return valor del peso
      */
     public Integer getWeight() {
         return weight;
     }
 
+    /**
+     * Setter del peso
+     * @param weight valor del peso
+     */
     public void setWeight(Integer weight) {
         this.weight = weight;
     }

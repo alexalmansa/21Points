@@ -117,10 +117,18 @@ public class User {
         this.email = email;
     }
 
+    /**
+     * Getter para saber si el usuario esta activado
+     * @return booleano indicando si esta activado el usuario o no
+     */
     public Boolean getActivated() {
         return activated;
     }
 
+    /**
+     * Setter para indicar si el usuario esta activado o no
+     * @param activated el estado del usuario
+     */
     public void setActivated(Boolean activated) {
         this.activated = activated;
     }
@@ -149,6 +157,10 @@ public class User {
         this.resetDate = resetDate;
     }
 
+    /**
+     * Metodo que pone en formato JSON los datos del usuario
+     * @return string
+     */
     @Override
     public String toString() {
         return "User{" +
