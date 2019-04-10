@@ -88,23 +88,8 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         addBlood();
         graphSetup();
         MultiStateToggle();
+        ButtonBlod();
 
-        btn_Blood = findViewById(R.id.btn_Blood);
-        btn_Blood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               if(type==0){
-                   type=1;
-                   btn_Blood.setText("Last systolic Measurement");
-               }else {
-                   type=0;
-                   btn_Blood.setText("Last diastolic Measurement");
-                   refreshGraph();
-               }
-
-
-            }
-        });
 
 
 
@@ -115,7 +100,25 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
 
 
     }
+private void ButtonBlod(){
+    btn_Blood = findViewById(R.id.btn_Blood);
+    btn_Blood.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(type==0){
+                type=1;
+                btn_Blood.setText("Last systolic Measurement");
+            }else {
+                type=0;
+                btn_Blood.setText("Last diastolic Measurement");
 
+            }
+            refreshGraph();
+
+        }
+    });
+
+}
 
     private void MultiStateToggle(){
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
