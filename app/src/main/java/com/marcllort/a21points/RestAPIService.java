@@ -34,7 +34,7 @@ public interface RestAPIService {
     Call<Blood> getBloodById(@Path("id") Integer id, @Header("Authorization") String token);
 
     @GET("/api/bp-by-month/{date}")
-    Call<Blood> getBloodByMonth(@Path("date") String date, @Header("Authorization") String token);
+    Call<ArrayBlood> getBloodByMonth(@Path("date") String date, @Header("Authorization") String token);
 
     @GET("/api/weights/{id}")
     Call<Weight> getWeightById(@Path("id") Integer id, @Header("Authorization") String token);
@@ -45,7 +45,7 @@ public interface RestAPIService {
     @POST("/api/preferences")
     Call<Preferences> postPreferences(@Body Preferences preferences, @Header("Authorization") String token);
 
-    @GET("/api/preferences/{id}")
-    Call<Preferences> getPreferencesById(@Path("id") Integer id, @Header("Authorization") String token);
+    @GET("/api/my-preferences")
+    Call<Preferences> getMyPreferences(@Header("Authorization") String token);
 
 }

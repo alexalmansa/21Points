@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
         //main_weightUnitsGoal = (TextView) findViewById(R.id.tv_main_weightUnitsGoal);
         //main_pointsGoal = (TextView) findViewById(R.id.tv_main_pointsGoal);
-
+        RestAPIManager.getInstance().getMyPreferences(this);
         settings = (ImageButton) findViewById(R.id.action_settings);
 
         settings.setOnClickListener(new View.OnClickListener() {
@@ -521,6 +521,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     @Override
     public void onGetPreferences(Preferences preferences) {
-
+        new AlertDialog.Builder(this).setMessage(preferences.toString());
     }
 }
