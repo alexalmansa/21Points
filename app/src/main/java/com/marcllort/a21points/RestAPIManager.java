@@ -163,7 +163,7 @@ public class RestAPIManager {
         });
     }
 
-    public synchronized void getBloodById(Integer id, final RestAPICallBack restAPICallBack) {
+    /*public synchronized void getBloodById(Integer id, final RestAPICallBack restAPICallBack) {
         Call<Blood> call = restApiService.getBloodById(id, "Bearer " + userToken.getIdToken());
 
         call.enqueue(new Callback<Blood>() {
@@ -182,14 +182,14 @@ public class RestAPIManager {
                 restAPICallBack.onFailure(t);
             }
         });
-    }
+    }*/
 
     public synchronized void getBloodbyMonth(String date, final RestAPICallBack restAPICallBack) {
-        Call<Blood> call = restApiService.getBloodByMonth(date, "Bearer " + userToken.getIdToken());
+        Call<ArrayBlood> call = restApiService.getBloodByMonth(date, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Blood>() {
+        call.enqueue(new Callback<ArrayBlood>() {
             @Override
-            public void onResponse(Call<Blood> call, Response<Blood> response) {
+            public void onResponse(Call<ArrayBlood> call, Response<ArrayBlood> response) {
 
                 if (response.isSuccessful()) {
                     restAPICallBack.onGetBlood(response.body());
@@ -199,7 +199,7 @@ public class RestAPIManager {
             }
 
             @Override
-            public void onFailure(Call<Blood> call, Throwable t) {
+            public void onFailure(Call<ArrayBlood> call, Throwable t) {
                 restAPICallBack.onFailure(t);
             }
         });

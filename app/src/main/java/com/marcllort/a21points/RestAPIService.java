@@ -34,7 +34,7 @@ public interface RestAPIService {
     Call<Blood> getBloodById(@Path("id") Integer id, @Header("Authorization") String token);
 
     @GET("/api/bp-by-month/{date}")
-    Call<Blood> getBloodByMonth(@Path("date") String date, @Header("Authorization") String token);
+    Call<ArrayBlood> getBloodByMonth(@Path("date") String date, @Header("Authorization") String token);
 
     @GET("/api/weights/{id}")
     Call<Weight> getWeightById(@Path("id") Integer id, @Header("Authorization") String token);
