@@ -99,7 +99,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailText.setError(getText(R.string.error_user));
+            mEmailText.setError(getText(R.string.error_mail));
             valid = false;
         } else {
             mPasswordText.setError(null);

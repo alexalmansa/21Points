@@ -68,7 +68,6 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                 startActivity(intent);
-                //finish();
             }
         });
 
@@ -114,7 +113,6 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
             // form field with an error.
             focusView.requestFocus();
         } else {
-            //UserTokenManager.getInstance().getUserToken(username, password, this);
             RestAPIManager.getInstance().getUserToken(username, password, this);
 
         }
@@ -184,34 +182,13 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
     @Override
     public void onLoginSuccess(UserToken userToken) {
 
-        /*new AlertDialog.Builder(this)
-                .setTitle("Token")
-                .setMessage("token: "+ userToken.getIdToken())
-
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();*/
-        //RestAPIManager.getInstance().postPoints(new Points("2019-03-14",1,1,1, ""), this);
-
         Intent intent = new Intent(this, MainActivity.class);
         Log.d(TAG, "startActivity(intent) created");
         if (!started) {
-            startActivity(intent);                                                      // Caldra fer startActibityForResult per saber si ha pogut fer login o no
+            startActivity(intent);
             started = true;
         }
         finish();
-
-
-        //finish();
     }
 
     /**
@@ -220,23 +197,20 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
      */
     @Override
     public void onFailure(Throwable t) {
-        //finish();
-        /*new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
                 .setTitle("Login Error")
-                .setMessage(t.getMessage())
+                .setMessage("Invalid user or wrong password")
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
+
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with delete operation
                     }
                 })
 
-                // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();*/
+                .show();
     }
 
     @Override

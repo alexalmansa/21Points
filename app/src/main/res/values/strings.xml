@@ -19,6 +19,7 @@
     <string name="register_btn">Register</string>
     <string name="login_text">Already a member? Login</string>
     <string name="error_user">Username is empty</string>
+    <string name="error_mail">Mail is empty</string>
     <string name="error_repass">Passwords do not match</string>
 
     <string-array name="parts_array">
