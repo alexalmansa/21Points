@@ -13,16 +13,17 @@
         android:orientation="vertical"
         android:paddingTop="16dp">
 
-        <TextView
-            android:id="@+id/text_week"
+        <Button
+            android:id="@+id/btn_Blood"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="This week"
+            android:text="@string/text_blood_diast"
             android:textColor="@color/white"
-            android:textSize="24dip" />
+            android:textSize="24dip"
+            android:background="@android:color/transparent"/>
 
         <TextView
             android:id="@+id/text_points"

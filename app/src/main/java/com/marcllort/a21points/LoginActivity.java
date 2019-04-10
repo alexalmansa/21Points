@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
     }
 
     @Override
-    public void onGetBlood(Blood blood) {
+    public void onGetBlood(ArrayBlood blood) {
 
     }
 

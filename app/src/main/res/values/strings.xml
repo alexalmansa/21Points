@@ -37,6 +37,8 @@
     <string name="key_points">POINTSGOAL</string>
 
     <!-- Blood preassure -->
+
+    <string name="text_blood_diast">Last Diastolic blood preassure</string>
     <string name="Add_preassure">Add Blod preassure</string>
 
     <string name="Curr_preassure_syst"> Systolic Blod Preassure</string>

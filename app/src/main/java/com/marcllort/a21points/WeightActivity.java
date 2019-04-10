@@ -401,7 +401,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
 
     @Override
-    public void onGetBlood(Blood blood) {
+    public void onGetBlood(ArrayBlood blood) {
 
     }
 

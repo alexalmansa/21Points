@@ -56,7 +56,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
     private static final String TAG = "21Blood";
     private LineChart chart;
     private FloatingActionButton addButton;
-    private EditText dateText;
+    private Button btn_Blood;
     private final Calendar myCalendar = Calendar.getInstance();
     private CheckBox ExerciceCheck, EatCheck, DrinkCheck;
     private TextView MonthBlood;
@@ -64,6 +64,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
     private Boolean initializing = true;
     private ArrayList<Blood> valors;
     private Calendar date;
+    int type = 0;
 
 
 
@@ -78,6 +79,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         setContentView(R.layout.activity_blood);
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
+
         valors = new ArrayList<>();
         date = Calendar.getInstance();
 
@@ -86,6 +88,27 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         addBlood();
         graphSetup();
         MultiStateToggle();
+
+        btn_Blood = findViewById(R.id.btn_Blood);
+        btn_Blood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               if(type==0){
+                   type=1;
+                   btn_Blood.setText("Last systolic Measurement");
+               }else {
+                   type=0;
+                   btn_Blood.setText("Last diastolic Measurement");
+                   refreshGraph();
+               }
+
+
+            }
+        });
+
+
+
+
 
 
 
@@ -139,7 +162,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         initializing = true;
         valors = new ArrayList<>();
         Calendar date = Calendar.getInstance();
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         //for (int i = 0; i < 5; i++) {
         RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
@@ -148,23 +171,20 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
 
     }
 
-    private void checkReceived(Blood punt) {
+    private void checkReceived(ArrayBlood punt, int i) {
 
 
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
 
-        if (!punt.getTimestamp().equals(sdf.format(date.getTime()))) {
-            RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getBlood() + "  " + punt.getTimestamp());
-        } else {
-            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getBlood() + "  " + punt.getTimestamp());
-            valors.add(punt);
-            date.add(Calendar.DAY_OF_MONTH, -7);
-            RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
 
-        }
+            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getReadings().get(i).getBlood() + "  " + punt.getReadings().get(i).getTimestamp());
+            valors.add(punt.getReadings().get(i));
+            date.add(Calendar.DAY_OF_MONTH, -7);
+            //RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
+
+
 
 
     }
@@ -263,16 +283,25 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         chart.invalidate();
     }
 
-    private void setData(int count, float range) {
+    private void setData() {
 
         ArrayList<Entry> values = new ArrayList<>();
-
+        System.out.println("LLARGADA"+ valors.size());
         ArrayList<Blood> valors2 = new ArrayList<>(valors);
         Collections.reverse(valors2);
         int i = 0;
-        for (Blood val : valors2) {
-            values.add(new Entry(i, val.getBlood().intValue(), getResources().getDrawable(R.drawable.logo)));
-            i++;
+        if (type == 0) {
+            for (Blood val : valors2) {
+                values.add(new Entry(i, val.getBlood().intValue(), getResources().getDrawable(R.drawable.logo)));
+                i++;
+            }
+        }else {
+
+
+            for (Blood val : valors2) {
+                values.add(new Entry(i, val.getSystolic().intValue(), getResources().getDrawable(R.drawable.logo)));
+                i++;
+            }
         }
 
 
@@ -315,7 +344,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
 
     private void thisMonthInitialize() {
         Calendar cal = Calendar.getInstance();
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
         RestAPIManager.getInstance().getBloodbyMonth(sdf.format(cal.getTime()), this);
@@ -323,12 +352,12 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         MonthBlood.setText("-");
     }
 
-    private int daysLeftThisMonth(Blood Blood) {
+    private int daysLeftThisMonth(ArrayBlood Blood, int i) {
         Calendar Month = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         try {
-            Month.setTime(sdf.parse(Blood.getTimestamp()));
+            Month.setTime(sdf.parse(Blood.getReadings().get(i).getTimestamp()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -364,33 +393,43 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
     }
 
     @Override
-    public synchronized void onGetBlood(Blood Blood) {
-
-        Blood punt = Blood;
+    public synchronized void onGetBlood(ArrayBlood blod) {
 
 
-        if (initializing) {
-            String strI = "" + punt.getBlood().toString();
-            MonthBlood.setText(strI);
 
+        int size = blod.getReadings().size();
+        valors = new ArrayList<>();
+        for(int i = 0; i<size ;i++ ) {
+            if (initializing) {
 
-            int days = daysLeftThisMonth(Blood);
-            if (days == 1) {
-                daysLeft.setText(days + " day left");
+                int days = daysLeftThisMonth(blod, i);
+                if (days == 1) {
+                    daysLeft.setText(days + " day left");
+                } else {
+                    daysLeft.setText(days + " days left");
+                }
+                initializing = false;
+
+                checkReceived(blod, i);
             } else {
-                daysLeft.setText(days + " days left");
-            }
-            initializing = false;
+                checkReceived(blod, i);
 
-            checkReceived(punt);
-        } else {
-            if (valors.size() < 6) {
-                checkReceived(punt);
-                setData(10, 6);
-                chart.invalidate();
             }
+            if (type == 0){
+
+                MonthBlood.setText(blod.getReadings().get(0).getBlood().toString());
+                System.out.println("BLOD =" + blod.getReadings().get(i).getBlood());
+
+            }else {
+
+                MonthBlood.setText(blod.getReadings().get(0).getSystolic().toString());
+            }
+
 
         }
+        setData();
+        chart.invalidate();
+
 
     }
 
@@ -412,7 +451,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
 
     @Override
     public void onFailure(Throwable t) {
-        String myFormat = "yyyy-MM-dd";  //In which you need put here
+        String myFormat = "yyyy-MM";  //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
 
