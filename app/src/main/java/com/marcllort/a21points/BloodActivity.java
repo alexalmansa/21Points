@@ -21,7 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
+import java.sql.Timestamp;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -40,10 +40,14 @@ import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -60,6 +64,8 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
     private Boolean initializing = true;
     private ArrayList<Blood> valors;
     private Calendar date;
+
+
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
 
@@ -196,6 +202,9 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
 
                         blod.setDiastolic(x);
                         blod.setSystolic(y);
+                        ZonedDateTime z = ZonedDateTime.now(ZoneId.systemDefault());
+                        blod.setTimestamp(toZoneDateTime(ZonedDateTime.now()));
+
                         RestAPIManager.getInstance().postBlood(blod,BloodActivity.this);
                         dialog.dismiss();
                     }
@@ -206,7 +215,13 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         });
 
     }
+    public static String toZoneDateTime(ZonedDateTime dateTime) {
 
+        ZonedDateTime a = ZonedDateTime.now();
+        System.out.println(a.toString());
+        return a.toString();
+
+    }
     private void graphSetup() {
         chart = findViewById(R.id.chart1);
         chart.setViewPortOffsets(0, 0, 0, 0);
@@ -303,7 +318,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-        //RestAPIManager.getInstance().getBloodByMonth(sdf.format(cal.getTime()), this);
+        RestAPIManager.getInstance().getBloodbyMonth(sdf.format(cal.getTime()), this);
         MonthBlood = (TextView) findViewById(R.id.text_points);
         MonthBlood.setText("-");
     }
@@ -397,7 +412,7 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
 
     @Override
     public void onFailure(Throwable t) {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM-dd";  //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
 

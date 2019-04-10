@@ -97,9 +97,9 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
                         Intent main = new Intent(getApplicationContext(), MainActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(main);
-                        finish();
-                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
 
+                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
+                        finish();
 
 
                         break;
@@ -107,9 +107,9 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
                         Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(blood);
-                        finish();
-                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
 
+                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
+                        finish();
 
                 }
             }
