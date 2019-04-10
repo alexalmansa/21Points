@@ -45,7 +45,7 @@ public interface RestAPIService {
     @POST("/api/preferences")
     Call<Preferences> postPreferences(@Body Preferences preferences, @Header("Authorization") String token);
 
-    @GET("/api/preferences/{id}")
-    Call<Preferences> getPreferencesById(@Path("id") Integer id, @Header("Authorization") String token);
+    @GET("/api/my-preferences")
+    Call<Preferences> getMyPreferences(@Header("Authorization") String token);
 
 }

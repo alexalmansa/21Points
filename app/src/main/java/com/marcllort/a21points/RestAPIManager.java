@@ -269,8 +269,8 @@ public class RestAPIManager {
         });
     }
 
-    public synchronized void getPreferencesById(Integer id, final RestAPICallBack restAPICallBack) {
-        Call<Preferences> call = restApiService.getPreferencesById(id, "Bearer " + userToken.getIdToken());
+    public synchronized void getMyPreferences(final RestAPICallBack restAPICallBack) {
+        Call<Preferences> call = restApiService.getMyPreferences("Bearer " + userToken.getIdToken());
 
         call.enqueue(new Callback<Preferences>() {
             @Override
