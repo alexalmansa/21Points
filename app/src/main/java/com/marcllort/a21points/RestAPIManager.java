@@ -163,27 +163,6 @@ public class RestAPIManager {
         });
     }
 
-    /*public synchronized void getBloodById(Integer id, final RestAPICallBack restAPICallBack) {
-        Call<Blood> call = restApiService.getBloodById(id, "Bearer " + userToken.getIdToken());
-
-        call.enqueue(new Callback<Blood>() {
-            @Override
-            public void onResponse(Call<Blood> call, Response<Blood> response) {
-
-                if (response.isSuccessful()) {
-                    restAPICallBack.onGetBlood(response.body());
-                } else {
-                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Blood> call, Throwable t) {
-                restAPICallBack.onFailure(t);
-            }
-        });
-    }*/
-
     public synchronized void getBloodbyMonth(String date, final RestAPICallBack restAPICallBack) {
         Call<ArrayBlood> call = restApiService.getBloodByMonth(date, "Bearer " + userToken.getIdToken());
 
@@ -227,33 +206,12 @@ public class RestAPIManager {
         });
     }
 
-    public synchronized void getWeightById(Integer id, final RestAPICallBack restAPICallBack) {
-        Call<Weight> call = restApiService.getWeightById(id, "Bearer " + userToken.getIdToken());
-
-        call.enqueue(new Callback<Weight>() {
-            @Override
-            public void onResponse(Call<Weight> call, Response<Weight> response) {
-
-                if (response.isSuccessful()) {
-                    restAPICallBack.onGetWeight(response.body());
-                } else {
-                    restAPICallBack.onFailure(new Throwable("ERROR " + response.code() + ", " + response.raw().message()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Weight> call, Throwable t) {
-                restAPICallBack.onFailure(t);
-            }
-        });
-    }
-
     public synchronized void getWeightbyMonth(String date, final RestAPICallBack restAPICallBack) {
-        Call<Weight> call = restApiService.getWeightByMonth(date, "Bearer " + userToken.getIdToken());
+        Call<WeightPeriod> call = restApiService.getWeightByMonth(date, "Bearer " + userToken.getIdToken());
 
-        call.enqueue(new Callback<Weight>() {
+        call.enqueue(new Callback<WeightPeriod>() {
             @Override
-            public void onResponse(Call<Weight> call, Response<Weight> response) {
+            public void onResponse(Call<WeightPeriod> call, Response<WeightPeriod> response) {
 
                 if (response.isSuccessful()) {
                     restAPICallBack.onGetWeight(response.body());
@@ -263,7 +221,7 @@ public class RestAPIManager {
             }
 
             @Override
-            public void onFailure(Call<Weight> call, Throwable t) {
+            public void onFailure(Call<WeightPeriod> call, Throwable t) {
                 restAPICallBack.onFailure(t);
             }
         });

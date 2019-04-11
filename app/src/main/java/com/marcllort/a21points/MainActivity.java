@@ -497,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
     @Override
-    public void onGetWeight(Weight weight) {
+    public void onGetWeight(WeightPeriod weight) {
 
     }
 

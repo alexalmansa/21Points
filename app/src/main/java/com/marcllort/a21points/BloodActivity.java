@@ -21,7 +21,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import java.sql.Timestamp;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -51,7 +53,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public  class BloodActivity extends AppCompatActivity implements RestAPICallBack {
+public class BloodActivity extends AppCompatActivity implements RestAPICallBack {
 
     private static final String TAG = "21Blood";
     private LineChart chart;
@@ -65,7 +67,6 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
     private ArrayList<Blood> valors;
     private Calendar date;
     int type = 0;
-
 
 
     //Farem servir el MainActivity com un gestor de les diferents activitats
@@ -90,76 +91,8 @@ public  class BloodActivity extends AppCompatActivity implements RestAPICallBack
         MultiStateToggle();
         ButtonBlod();
 
-
-
-
-
-
-
-
-
-
     }
-private void ButtonBlod(){
-    btn_Blood = findViewById(R.id.btn_Blood);
-    btn_Blood.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if(type==0){
-                type=1;
-                btn_Blood.setText("Last systolic Measurement");
-            }else {
-                type=0;
-                btn_Blood.setText("Last diastolic Measurement");
 
-            }
-            refreshGraph();
-
-        }
-    });
-
-}
-
-    private void MultiStateToggle(){
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
-        ImageButton button1 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
-        button1.setImageResource(R.drawable.points);
-        ImageButton button2 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
-        button2.setImageResource(R.drawable.blood);
-        ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
-        button3.setImageResource(R.drawable.weight);
-
-        View[] buttons = new View[] {button1, button2, button3};
-        msb_button.setButtons(buttons, new boolean[buttons.length]);
-
-        msb_button.setValue(1);
-        msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
-            @Override
-            public void onValueChanged(int position) {
-                Log.d(TAG, "Position: " + position);
-                switch (position){
-                    case 0:
-                        Intent main = new Intent(getApplicationContext(), MainActivity.class);
-                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
-                        startActivity(main);
-
-                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
-                        finish();
-                        break;
-                    case 2:
-                        Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
-                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
-                        startActivity(weight);
-                        finish();
-                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_out_left);
-
-
-                }
-            }
-        });
-    }
 
     private void refreshGraph() {
         initializing = true;
@@ -174,22 +107,14 @@ private void ButtonBlod(){
 
     }
 
-    private void checkReceived(ArrayBlood punt, int i) {
-
-
+    private void thisMonthInitialize() {
+        Calendar cal = Calendar.getInstance();
         String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-
-
-            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getReadings().get(i).getBlood() + "  " + punt.getReadings().get(i).getTimestamp());
-            valors.add(punt.getReadings().get(i));
-            date.add(Calendar.DAY_OF_MONTH, -7);
-            //RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
-
-
-
-
+        RestAPIManager.getInstance().getBloodbyMonth(sdf.format(cal.getTime()), this);
+        MonthBlood = (TextView) findViewById(R.id.text_points);
+        MonthBlood.setText("-");
     }
 
     private void addBlood() {
@@ -208,7 +133,6 @@ private void ButtonBlod(){
                 final EditText mSist = (EditText) mView.findViewById(R.id.blod_preassure_syst);
 
 
-
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
@@ -219,7 +143,7 @@ private void ButtonBlod(){
                     public void onClick(View view) {
 
 
-                        Blood blod= new Blood();
+                        Blood blod = new Blood();
                         int x = Integer.parseInt(mDiast.getText().toString());
                         int y = Integer.parseInt(mSist.getText().toString());
 
@@ -228,7 +152,7 @@ private void ButtonBlod(){
                         ZonedDateTime z = ZonedDateTime.now(ZoneId.systemDefault());
                         blod.setTimestamp(toZoneDateTime(ZonedDateTime.now()));
 
-                        RestAPIManager.getInstance().postBlood(blod,BloodActivity.this);
+                        RestAPIManager.getInstance().postBlood(blod, BloodActivity.this);
                         dialog.dismiss();
                     }
                 });
@@ -238,6 +162,80 @@ private void ButtonBlod(){
         });
 
     }
+
+    private void MultiStateToggle() {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
+        ImageButton button1 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
+        button1.setImageResource(R.drawable.points);
+        ImageButton button2 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
+        button2.setImageResource(R.drawable.blood);
+        ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
+        button3.setImageResource(R.drawable.weight);
+
+        View[] buttons = new View[]{button1, button2, button3};
+        msb_button.setButtons(buttons, new boolean[buttons.length]);
+
+        msb_button.setValue(1);
+        msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                Log.d(TAG, "Position: " + position);
+                switch (position) {
+                    case 0:
+                        Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(main);
+
+                        overridePendingTransition(R.transition.slide_in_left, R.transition.slide_in_left);
+                        finish();
+                        break;
+                    case 2:
+                        Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
+                        Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
+                        startActivity(weight);
+                        finish();
+                        overridePendingTransition(R.transition.slide_in_right, R.transition.slide_out_left);
+
+
+                }
+            }
+        });
+    }
+
+    private void ButtonBlod() {
+        btn_Blood = findViewById(R.id.btn_Blood);
+        btn_Blood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (type == 0) {
+                    type = 1;
+                    btn_Blood.setText("Last systolic Measurement");
+                } else {
+                    type = 0;
+                    btn_Blood.setText("Last diastolic Measurement");
+
+                }
+                refreshGraph();
+
+            }
+        });
+
+    }
+
+    private void checkReceived(ArrayBlood punt, int i) {
+
+        String myFormat = "yyyy-MM"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+
+
+        System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getReadings().get(i).getBlood() + "  " + punt.getReadings().get(i).getTimestamp());
+        valors.add(punt.getReadings().get(i));
+        date.add(Calendar.DAY_OF_MONTH, -7);
+
+    }
+
     public static String toZoneDateTime(ZonedDateTime dateTime) {
 
         ZonedDateTime a = ZonedDateTime.now();
@@ -245,6 +243,7 @@ private void ButtonBlod(){
         return a.toString();
 
     }
+
     private void graphSetup() {
         chart = findViewById(R.id.chart1);
         chart.setViewPortOffsets(0, 0, 0, 0);
@@ -289,7 +288,7 @@ private void ButtonBlod(){
     private void setData() {
 
         ArrayList<Entry> values = new ArrayList<>();
-        System.out.println("LLARGADA"+ valors.size());
+        System.out.println("LLARGADA" + valors.size());
         ArrayList<Blood> valors2 = new ArrayList<>(valors);
         Collections.reverse(valors2);
         int i = 0;
@@ -298,7 +297,7 @@ private void ButtonBlod(){
                 values.add(new Entry(i, val.getBlood().intValue(), getResources().getDrawable(R.drawable.logo)));
                 i++;
             }
-        }else {
+        } else {
 
 
             for (Blood val : valors2) {
@@ -345,33 +344,8 @@ private void ButtonBlod(){
 
     }
 
-    private void thisMonthInitialize() {
-        Calendar cal = Calendar.getInstance();
-        String myFormat = "yyyy-MM"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-
-        RestAPIManager.getInstance().getBloodbyMonth(sdf.format(cal.getTime()), this);
-        MonthBlood = (TextView) findViewById(R.id.text_points);
-        MonthBlood.setText("-");
-    }
-
-    private int daysLeftThisMonth(ArrayBlood Blood, int i) {
-        Calendar Month = Calendar.getInstance();
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        try {
-            Month.setTime(sdf.parse(Blood.getReadings().get(i).getTimestamp()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar now = Calendar.getInstance();
-
-        long difference = now.getTimeInMillis() - Month.getTimeInMillis();
-        int days = (int) (difference / (1000 * 60 * 60 * 24));
 
 
-        return 7 - days;
-    }
 
     @Override
     public void onPostPoints(Points points) {
@@ -390,7 +364,6 @@ private void ButtonBlod(){
                 .setMessage(Blood.toString())
                 .show();
 
-
         refreshGraph();
         date = Calendar.getInstance();
     }
@@ -398,19 +371,11 @@ private void ButtonBlod(){
     @Override
     public synchronized void onGetBlood(ArrayBlood blod) {
 
-
-
         int size = blod.getReadings().size();
         valors = new ArrayList<>();
-        for(int i = 0; i<size ;i++ ) {
+        for (int i = 0; i < size; i++) {
             if (initializing) {
 
-                int days = daysLeftThisMonth(blod, i);
-                if (days == 1) {
-                    daysLeft.setText(days + " day left");
-                } else {
-                    daysLeft.setText(days + " days left");
-                }
                 initializing = false;
 
                 checkReceived(blod, i);
@@ -418,12 +383,12 @@ private void ButtonBlod(){
                 checkReceived(blod, i);
 
             }
-            if (type == 0){
+            if (type == 0) {
 
                 MonthBlood.setText(blod.getReadings().get(0).getBlood().toString());
                 System.out.println("BLOD =" + blod.getReadings().get(i).getBlood());
 
-            }else {
+            } else {
 
                 MonthBlood.setText(blod.getReadings().get(0).getSystolic().toString());
             }
@@ -431,8 +396,7 @@ private void ButtonBlod(){
 
         }
         setData();
-        chart.invalidate();
-
+        chart.invalidate(); // Refresquem el graph
 
     }
 
@@ -442,7 +406,7 @@ private void ButtonBlod(){
     }
 
     @Override
-    public void onGetWeight(Weight weight) {
+    public void onGetWeight(WeightPeriod weight) {
 
     }
 
@@ -451,13 +415,11 @@ private void ButtonBlod(){
 
     }
 
-
     @Override
     public void onFailure(Throwable t) {
         String myFormat = "yyyy-MM";  //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         RestAPIManager.getInstance().getBloodbyMonth(sdf.format(date.getTime()), this);
-
     }
 
     @Override

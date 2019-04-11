@@ -369,12 +369,12 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     }
 
     @Override
-    public synchronized void onGetWeight(Weight Weight) {
+    public synchronized void onGetWeight(WeightPeriod Weight) {
 
-        Weight punt = Weight;
+        WeightPeriod punt = Weight;
 
 
-        if (initializing) {
+        /*if (initializing) {
             String strI = "" + punt.getWeight().toString();
             monthWeight.setText(strI);
 
@@ -395,7 +395,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
                 chart.invalidate();
             }
 
-        }
+        }*/
 
     }
 

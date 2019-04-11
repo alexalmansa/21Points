@@ -162,9 +162,10 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
     }
 
     @Override
-    public void onGetWeight(Weight weight) {
+    public void onGetWeight(WeightPeriod weight) {
 
     }
+
 
     @Override
     public void onPostPoints(Points points) {

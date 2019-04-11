@@ -40,7 +40,7 @@ public interface RestAPIService {
     Call<Weight> getWeightById(@Path("id") Integer id, @Header("Authorization") String token);
 
     @GET("/api/weight-by-month/{date}")
-    Call<Weight> getWeightByMonth(@Path("date") String date, @Header("Authorization") String token);
+    Call<WeightPeriod> getWeightByMonth(@Path("date") String date, @Header("Authorization") String token);
 
     @POST("/api/preferences")
     Call<Preferences> postPreferences(@Body Preferences preferences, @Header("Authorization") String token);

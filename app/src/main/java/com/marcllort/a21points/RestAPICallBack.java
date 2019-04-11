@@ -6,7 +6,7 @@ public interface RestAPICallBack {
     void onPostBlood(Blood blood);
     void onGetBlood(ArrayBlood arrayblood);
     void onPostWeight(Weight weight);
-    void onGetWeight(Weight weight);
+    void onGetWeight(WeightPeriod weight);
     void onLoginSuccess(UserToken userToken);
     void onFailure(Throwable t);
     void onPostPreferences(Preferences preferences);
