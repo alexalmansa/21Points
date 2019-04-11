@@ -1,7 +1,6 @@
 package com.marcllort.a21points;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import java.sql.Timestamp;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -30,26 +26,23 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.marcllort.a21points.Blood;
-import com.marcllort.a21points.Points;
-import com.marcllort.a21points.R;
-import com.marcllort.a21points.RestAPICallBack;
-import com.marcllort.a21points.RestAPIManager;
-import com.marcllort.a21points.UserToken;
-import com.marcllort.a21points.Weight;
+import com.marcllort.a21points.API.RestAPICallBack;
+import com.marcllort.a21points.API.RestAPIManager;
+import com.marcllort.a21points.Model.ArrayBlood;
+import com.marcllort.a21points.Model.Blood;
+import com.marcllort.a21points.Model.Points;
+import com.marcllort.a21points.Model.Preferences;
+import com.marcllort.a21points.Model.UserToken;
+import com.marcllort.a21points.Model.Weight;
+import com.marcllort.a21points.Model.WeightPeriod;
 
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
-import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.Locale;
 
 
@@ -80,7 +73,6 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
         setContentView(R.layout.activity_blood);
 
         daysLeft = (TextView) findViewById(R.id.text_daysLeft);
-
         valors = new ArrayList<>();
         date = Calendar.getInstance();
 
@@ -123,7 +115,7 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(BloodActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.blood_preassure_custom_dialog, null);
+                View mView = getLayoutInflater().inflate(R.layout.blood_preassure_dialog, null);
 
 
                 Button mAdd = (Button) mView.findViewById(R.id.btnAddPreassure);
@@ -345,8 +337,6 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
     }
 
 
-
-
     @Override
     public void onPostPoints(Points points) {
 
@@ -431,4 +421,6 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
     public void onGetPreferences(Preferences preferences) {
 
     }
+
+
 }

@@ -14,17 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -32,6 +28,15 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.marcllort.a21points.API.RestAPICallBack;
+import com.marcllort.a21points.API.RestAPIManager;
+import com.marcllort.a21points.Model.ArrayBlood;
+import com.marcllort.a21points.Model.Blood;
+import com.marcllort.a21points.Model.Points;
+import com.marcllort.a21points.Model.Preferences;
+import com.marcllort.a21points.Model.UserToken;
+import com.marcllort.a21points.Model.Weight;
+import com.marcllort.a21points.Model.WeightPeriod;
 
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
@@ -40,8 +45,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
-import android.view.LayoutInflater;
 
+import android.view.LayoutInflater;
 
 
 public class MainActivity extends AppCompatActivity implements RestAPICallBack {
@@ -85,17 +90,8 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         date = Calendar.getInstance(Locale.US);
 
 
-
-
-
         multiStateToggle();
-
-
-
-
         firstDayWeek();
-
-
         dialogBuilder();
         refreshGraph();
         thisWeekInitialize();
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     }
 
 
-    private void multiStateToggle(){
+    private void multiStateToggle() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
@@ -117,104 +113,32 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button3.setImageResource(R.drawable.weight);
 
-        View[] buttons = new View[] {button1, button2, button3};
+        View[] buttons = new View[]{button1, button2, button3};
         msb_button.setButtons(buttons, new boolean[buttons.length]);
 
         msb_button.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
             @Override
             public void onValueChanged(int position) {
                 Log.d(TAG, "Position: " + position);
-                switch (position){
+                switch (position) {
                     case 1:
                         Intent blood = new Intent(getApplicationContext(), BloodActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(blood);
-                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_out_left);
+                        overridePendingTransition(R.transition.slide_in_right, R.transition.slide_out_left);
                         finish();
                         break;
                     case 2:
                         Intent weight = new Intent(getApplicationContext(), WeightActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(weight);
-                        overridePendingTransition(R.transition.slide_in_right,R.transition.slide_out_left);
+                        overridePendingTransition(R.transition.slide_in_right, R.transition.slide_out_left);
 
                         finish();
                 }
             }
         });
         msb_button.setValue(0);
-    }
-
-    private void dialogBuilder() {
-
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-        //cogemos el dialog y lo ponemos como view
-        View mView = getLayoutInflater().inflate(R.layout.preferences_custom_dialog, null);
-
-        points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
-        weightUnits = (Spinner) mView.findViewById(R.id.spinner);
-
-        addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
-
-        //setOnclickListener, guardarme las varaibles d¡que el user intriduce y crear las preferenciasmeidante
-        //el getPreferencesById
-        //RestAPIManager.getInstance().postPreferences(new Preferences(), MainActivity.this);
-
-        mBuilder.setView(mView);
-        //dialog = mBuilder.create();
-        //dialog.show();
-
-    }
-
-    private void preferencesDialog() {
-
-        //main_weightUnitsGoal = (TextView) findViewById(R.id.tv_main_weightUnitsGoal);
-        //main_pointsGoal = (TextView) findViewById(R.id.tv_main_pointsGoal);
-        RestAPIManager.getInstance().getMyPreferences(this);
-        settings = (ImageButton) findViewById(R.id.action_settings);
-
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                dialog.show();
-
-                /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
-                startActivityForResult(intent, 0);
-                Bundle returnedInfo = intent.getExtras();
-                main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
-                main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 15));
-                */
-
-
-                /*
-                Preferences preferences = new Preferences();
-                points_goal = findViewById(R.id.weekly_points_goal2);
-                int numero = Integer.parseInt(String.valueOf(points_goal));
-                preferences.setWeeklyGoal(numero);
-                weightUnits = findViewById(R.id.weight_units);
-                preferences.setWeightUnits(weightUnits.toString());
-                main_weightUnitsGoal.setText(preferences.getWeightUnits());
-                main_pointsGoal.setText(preferences.getWeeklyGoal());
-                 */
-            }
-        });
-
-
-    }
-
-    private void refreshGraph() {
-        initializing = true;
-        valors = new ArrayList<>();
-        Calendar date = (Calendar) Calendar.getInstance(Locale.US);
-        firstDayWeek();
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        //for (int i = 0; i < 5; i++) {
-        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-        //  date.add(Calendar.DAY_OF_MONTH, -7);
-        //}
-
     }
 
     private void firstDayWeek() {
@@ -226,25 +150,39 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         date.add(Calendar.DATE, +1);
     }
 
-    private void checkReceived(Points punt) {
+    private void dialogBuilder() {
 
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        //cogemos el dialog y lo ponemos como view
+        View mView = getLayoutInflater().inflate(R.layout.preferences_dialog, null);
 
+        points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
+        weightUnits = (Spinner) mView.findViewById(R.id.spinner);
+
+        addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
+
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+
+    }
+
+    private void refreshGraph() {
+        initializing = true;
+        valors = new ArrayList<>();
+        Calendar date = (Calendar) Calendar.getInstance(Locale.US);
+        firstDayWeek();
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+        RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+    }
+
+    private void thisWeekInitialize() {
+        Calendar cal = Calendar.getInstance(Locale.US);
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-
-        if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek() + "demamant:" + sdf.format(date.getTime()));
-        } else {
-            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
-            valors.add(punt);
-            date.add(Calendar.DAY_OF_MONTH, -7);
-            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-
-        }
-
-
+        weekPoints = (TextView) findViewById(R.id.text_points);
+        weekPoints.setText("-");
     }
 
     private void addPoints() {
@@ -253,14 +191,11 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
-
+                View mView = getLayoutInflater().inflate(R.layout.points_dialog, null);
 
                 Button mAdd = (Button) mView.findViewById(R.id.btnAdd2);
 
-
                 final EditText mNotes = (EditText) mView.findViewById(R.id.etnotes);
-
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -316,6 +251,41 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 });
             }
         });
+
+    }
+
+    private void preferencesDialog() {
+
+        RestAPIManager.getInstance().getMyPreferences(this);
+        settings = (ImageButton) findViewById(R.id.action_settings);
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.show();
+
+                /*Intent intent = new Intent(getBaseContext(), PreferenesActivity.class);
+                startActivityForResult(intent, 0);
+                Bundle returnedInfo = intent.getExtras();
+                main_weightUnitsGoal.setText(returnedInfo.getString(getString(R.string.key_weight), "none"));
+                main_pointsGoal.setText(returnedInfo.getInt(getString(R.string.key_points), 15));
+                */
+
+
+                /*
+                Preferences preferences = new Preferences();
+                points_goal = findViewById(R.id.weekly_points_goal2);
+                int numero = Integer.parseInt(String.valueOf(points_goal));
+                preferences.setWeeklyGoal(numero);
+                weightUnits = findViewById(R.id.weight_units);
+                preferences.setWeightUnits(weightUnits.toString());
+                main_weightUnitsGoal.setText(preferences.getWeightUnits());
+                main_pointsGoal.setText(preferences.getWeeklyGoal());
+                 */
+            }
+        });
+
 
     }
 
@@ -410,14 +380,22 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     }
 
-    private void thisWeekInitialize() {
-        Calendar cal = Calendar.getInstance(Locale.US);
+    private void checkReceived(Points punt) {
+
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
-        //RestAPIManager.getInstance().getPointsByWeek(sdf.format(cal.getTime()), this);
-        weekPoints = (TextView) findViewById(R.id.text_points);
-        weekPoints.setText("-");
+
+        if (!punt.getWeek().equals(sdf.format(date.getTime()))) {
+            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getPoints() + "  " + punt.getWeek() + "demamant:" + sdf.format(date.getTime()));
+        } else {
+            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getPoints() + "  " + punt.getWeek());
+            valors.add(punt);
+            date.add(Calendar.DAY_OF_MONTH, -7);
+            RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
+        }
+
     }
 
     private int daysLeftThisWeek(Points points) {
@@ -438,13 +416,13 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         return 7 - days;
     }
 
+
     @Override
     public void onPostPoints(Points points) {
         new AlertDialog.Builder(this)
                 .setTitle("Points added")
-                .setMessage(points.toString())
+                .setMessage("Points added succesfully.")
                 .show();
-
 
         refreshGraph();
         firstDayWeek();
@@ -454,7 +432,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     public synchronized void onGetPoints(Points points) {
 
         Points punt = points;
-
 
         if (initializing) {
             String strI = "" + punt.getPoints().toString();
@@ -511,7 +488,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         RestAPIManager.getInstance().getPointsByWeek(sdf.format(date.getTime()), this);
-
     }
 
     @Override
@@ -523,4 +499,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     public void onGetPreferences(Preferences preferences) {
         new AlertDialog.Builder(this).setMessage(preferences.toString());
     }
+
+
 }

@@ -26,6 +26,15 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.marcllort.a21points.API.RestAPICallBack;
+import com.marcllort.a21points.API.RestAPIManager;
+import com.marcllort.a21points.Model.ArrayBlood;
+import com.marcllort.a21points.Model.Blood;
+import com.marcllort.a21points.Model.Points;
+import com.marcllort.a21points.Model.Preferences;
+import com.marcllort.a21points.Model.UserToken;
+import com.marcllort.a21points.Model.Weight;
+import com.marcllort.a21points.Model.WeightPeriod;
 
 
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
@@ -51,7 +60,6 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     private ArrayList<Weight> valors;
     private Calendar date;
 
-    //Farem servir el MainActivity com un gestor de les diferents activitats
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +79,10 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         graphSetup();
         MultiStateToggle();
 
-
     }
-    private void MultiStateToggle(){
+
+
+    private void MultiStateToggle() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         MultiStateToggleButton msb_button = (MultiStateToggleButton) this.findViewById(R.id.mstb_multi_id);
@@ -84,7 +93,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         ImageButton button3 = (ImageButton) inflater.inflate(R.layout.btn_image, msb_button, false);
         button3.setImageResource(R.drawable.weight);
 
-        View[] buttons = new View[] {button1, button2, button3};
+        View[] buttons = new View[]{button1, button2, button3};
         msb_button.setButtons(buttons, new boolean[buttons.length]);
 
         msb_button.setValue(2);
@@ -92,13 +101,13 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
             @Override
             public void onValueChanged(int position) {
                 Log.d(TAG, "Position: " + position);
-                switch (position){
+                switch (position) {
                     case 0:
                         Intent main = new Intent(getApplicationContext(), MainActivity.class);
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(main);
 
-                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
+                        overridePendingTransition(R.transition.slide_in_left, R.transition.slide_in_left);
                         finish();
 
 
@@ -108,7 +117,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
                         Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                         startActivity(blood);
 
-                        overridePendingTransition(R.transition.slide_in_left,R.transition.slide_in_left);
+                        overridePendingTransition(R.transition.slide_in_left, R.transition.slide_in_left);
                         finish();
 
                 }
@@ -120,33 +129,13 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         initializing = true;
         valors = new ArrayList<>();
         Calendar date = Calendar.getInstance();
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
         //for (int i = 0; i < 5; i++) {
+        System.out.println(sdf.format(date.getTime()));
         RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
         //  date.add(Calendar.DAY_OF_MONTH, -7);
         //}
-
-    }
-
-    private void checkReceived(Weight punt) {
-
-
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-
-
-        if (!punt.getTimestamp().equals(sdf.format(date.getTime()))) {
-            RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
-            System.out.println("FALLA, TORNEM A DEMANAR, rebut: " + punt.getWeight() + "  " + punt.getTimestamp());
-        } else {
-            System.out.println("FUNCIONA, DEMANEM SEGUENT, REBUT" + punt.getWeight() + "  " + punt.getTimestamp());
-            valors.add(punt);
-            date.add(Calendar.DAY_OF_MONTH, -7);
-            RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
-
-        }
-
 
     }
 
@@ -156,7 +145,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(WeightActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+                View mView = getLayoutInflater().inflate(R.layout.points_dialog, null);
 
 
                 Button mAdd = (Button) mView.findViewById(R.id.btnAdd2);
@@ -341,6 +330,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         return 7 - days;
     }
 
+
     @Override
     public void onPostPoints(Points points) {
 
@@ -369,10 +359,10 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     }
 
     @Override
-    public synchronized void onGetWeight(WeightPeriod Weight) {
+    public synchronized void onGetWeight(WeightPeriod weight) {
 
-        WeightPeriod punt = Weight;
-
+        WeightPeriod weightperiod = weight;
+        System.out.println("REBUT: "+ weightperiod.getPeriod());
 
         /*if (initializing) {
             String strI = "" + punt.getWeight().toString();
@@ -399,12 +389,10 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
     }
 
-
     @Override
     public void onGetBlood(ArrayBlood blood) {
 
     }
-
 
     @Override
     public void onLoginSuccess(UserToken userToken) {
@@ -413,10 +401,11 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
 
     @Override
     public void onFailure(Throwable t) {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        RestAPIManager.getInstance().getWeightbyMonth(sdf.format(date.getTime()), this);
+        RestAPIManager.getInstance().getWeightbyMonth("2019-03", this);
 
+        System.out.println(t.getMessage());
     }
 
     @Override
@@ -428,4 +417,6 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     public void onGetPreferences(Preferences preferences) {
 
     }
+
+
 }

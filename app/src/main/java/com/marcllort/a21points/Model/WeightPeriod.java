@@ -1,4 +1,4 @@
-package com.marcllort.a21points;
+package com.marcllort.a21points.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

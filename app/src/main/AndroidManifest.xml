@@ -25,7 +25,7 @@
             android:name=".MainActivity"
             android:theme="@style/SignupActivityTheme" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".RegisterActivity"
             android:theme="@style/SignupActivityTheme" />
         <activity
             android:name=".WeightActivity"

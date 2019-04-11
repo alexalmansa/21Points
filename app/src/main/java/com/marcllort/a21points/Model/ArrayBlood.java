@@ -1,9 +1,8 @@
-package com.marcllort.a21points;
+package com.marcllort.a21points.Model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.marcllort.a21points.Blood;
 
 public class ArrayBlood {
 

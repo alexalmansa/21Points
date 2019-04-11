@@ -3,7 +3,6 @@ package com.marcllort.a21points;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SignupActivity extends AppCompatActivity implements RegisterCallback {
+import com.marcllort.a21points.API.RegisterCallback;
+import com.marcllort.a21points.API.UserTokenManager;
+
+public class RegisterActivity extends AppCompatActivity implements RegisterCallback {
 
     private static final String TAG = "SignUpActivity";
 
@@ -30,7 +32,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
 
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();                    //Fora actionbar
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_register);
 
         mRegisterButton = findViewById(R.id.btn_signup);
         mAlreadyRegTextView = findViewById(R.id.text_alreadyLogin);
@@ -82,8 +84,8 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
 
                     }
                 }, 3000);
-    }
 
+    }
 
     public boolean validate() {
         boolean valid = true;
@@ -120,7 +122,6 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
         return valid;
     }
 
-
     public void onSignUpFailed() {
         Toast.makeText(getBaseContext(), "SignUp failed", Toast.LENGTH_LONG).show();
         mRegisterButton.setEnabled(true);
@@ -148,6 +149,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterCallbac
                 .show();
 
     }
+
 
     @Override
     public void onSuccess() {

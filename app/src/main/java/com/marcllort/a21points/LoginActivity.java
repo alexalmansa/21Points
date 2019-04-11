@@ -16,6 +16,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.marcllort.a21points.API.RestAPICallBack;
+import com.marcllort.a21points.API.RestAPIManager;
+import com.marcllort.a21points.Model.ArrayBlood;
+import com.marcllort.a21points.Model.Blood;
+import com.marcllort.a21points.Model.Points;
+import com.marcllort.a21points.Model.Preferences;
+import com.marcllort.a21points.Model.UserToken;
+import com.marcllort.a21points.Model.Weight;
+import com.marcllort.a21points.Model.WeightPeriod;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -65,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
         mSignupTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 Log.d(TAG, "startActivity(intent) created"); //foresult caldra fer en algun moment
                 startActivity(intent);
             }
@@ -120,7 +130,8 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     /**
      * Función para comprobar si el email introducido por el usuario tiene una apariencia correcta
-     * @param email  dirección introducida
+     *
+     * @param email dirección introducida
      * @return booleano indicando si es correcto
      */
     private boolean isEmailValid(String email) {
@@ -130,6 +141,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     /**
      * Función que comprueba si la contraseña introducida cumple con la longitud mínima requerida
+     *
      * @param password contraseña introducida
      * @return booleano indicando si es correcto o no
      */
@@ -166,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     }
 
-
     @Override
     public void onPostPoints(Points points) {
         new AlertDialog.Builder(this)
@@ -178,7 +189,6 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
 
     }
-
 
     @Override
     public void onLoginSuccess(UserToken userToken) {
@@ -194,6 +204,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
 
     /**
      * Función que se ejecuta si algo falla cuando el usuario intenta iniciar sesión
+     *
      * @param t
      */
     @Override
@@ -223,5 +234,7 @@ public class LoginActivity extends AppCompatActivity implements RestAPICallBack 
     public void onGetPreferences(Preferences preferences) {
 
     }
+
+
 }
 

@@ -1,4 +1,13 @@
-package com.marcllort.a21points;
+package com.marcllort.a21points.API;
+
+import com.marcllort.a21points.Model.ArrayBlood;
+import com.marcllort.a21points.Model.Blood;
+import com.marcllort.a21points.Model.Points;
+import com.marcllort.a21points.Model.Preferences;
+import com.marcllort.a21points.Model.UserData;
+import com.marcllort.a21points.Model.UserToken;
+import com.marcllort.a21points.Model.Weight;
+import com.marcllort.a21points.Model.WeightPeriod;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -269,4 +278,6 @@ public class RestAPIManager {
             }
         });
     }
+
+
 }
