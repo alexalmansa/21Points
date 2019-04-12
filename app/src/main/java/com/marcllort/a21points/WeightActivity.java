@@ -400,4 +400,4 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     }
 
 
-}}
+}
