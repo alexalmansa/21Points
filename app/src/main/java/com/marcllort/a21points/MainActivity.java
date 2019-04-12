@@ -166,8 +166,10 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         addButtonPreferences.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String points_left = String.valueOf(Integer.parseInt(weekPoints.toString()) - Integer.parseInt(points_goal.getText().toString()));
-                pointsTo.setText(points_left);
+                int points_left = Integer.parseInt(points_goal.getText().toString()) - Integer.parseInt(weekPoints.getText().toString());
+                pointsTo.setText(String.valueOf(points_left));
+                points_goal.setText("");
+                dialog.dismiss();
             }
         });
 
