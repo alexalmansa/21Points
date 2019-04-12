@@ -325,7 +325,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
         System.out.println("posted");
         new AlertDialog.Builder(this)
                 .setTitle("Weight added")
-                .setMessage(Weight.toString())
+                .setMessage("Weight added successfully.")
                 .show();
 
 

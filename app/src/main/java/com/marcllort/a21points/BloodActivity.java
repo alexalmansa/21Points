@@ -351,7 +351,7 @@ public class BloodActivity extends AppCompatActivity implements RestAPICallBack 
     public void onPostBlood(Blood Blood) {
         new AlertDialog.Builder(this)
                 .setTitle("Blood added")
-                .setMessage(Blood.toString())
+                .setMessage("Blood data added successfully.")
                 .show();
 
         refreshGraph();
