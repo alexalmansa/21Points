@@ -24,13 +24,12 @@
 
     <string-array name="parts_array">
         <item> Points </item>
-        <item> Blod Preassure </item>
+        <item> Blood Preassure </item>
         <item> Weight </item>
     </string-array>
 
     <!-- Preferences Custom Dialog -->
     <string name="Add_Preferences">Add Preferences</string>
-
     <string name="Weekly_Points_Goal">Weekly Points Goal</string>
     <string name="Weight_Units">Weight Units</string>
     <string name="key_weight">WEIGHTUNITSGOAL</string>
@@ -39,11 +38,14 @@
     <!-- Blood preassure -->
 
     <string name="text_blood_diast">Last Diastolic blood preassure</string>
-    <string name="Add_preassure">Add Blod preassure</string>
+    <string name="Add_preassure">Add Blood preassure</string>
 
-    <string name="Curr_preassure_syst"> Systolic Blod Preassure</string>
-    <string name="Curr_preassure_diast"> Diastolic Blod Preassure</string>
+    <string name="Curr_preassure_syst"> Systolic Blood Preassure</string>
+    <string name="Curr_preassure_diast"> Diastolic Blood Preassure</string>
 
+    <!-- Weight -->
+    <string name="Add_Weight">Add Weight</string>
+    <string name="Add_User_Weight">Insert your Weight (kg)</string>
 
     <!--Spinner Unitats -->
     <string-array name="numbers">

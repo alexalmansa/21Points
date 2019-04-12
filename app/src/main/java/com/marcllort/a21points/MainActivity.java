@@ -63,11 +63,12 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private ArrayList<Points> valors;
     private Calendar date;
     private EditText points_goal;
-    private Spinner weightUnits;
+    private EditText weightUnits;
     private Button addButtonPreferences;
     private ImageButton settings;
     private MultiStateToggleButton multiButton;
     private AlertDialog dialog;
+    private String points_left;
 
     //main activity
     private TextView main_pointsGoal;
@@ -157,9 +158,16 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         View mView = getLayoutInflater().inflate(R.layout.preferences_dialog, null);
 
         points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
-        weightUnits = (Spinner) mView.findViewById(R.id.spinner);
+        weightUnits = (EditText) mView.findViewById(R.id.weight_units);
+        points_left = String.valueOf(Integer.parseInt(weekPoints.toString()) - Integer.parseInt(points_goal.getText().toString()));
 
         addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
+        addButtonPreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                points_goal.setText(points_left);
+            }
+        });
 
         mBuilder.setView(mView);
         dialog = mBuilder.create();
