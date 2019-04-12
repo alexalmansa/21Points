@@ -36,34 +36,25 @@
             android:textColor="@color/white"
             android:textSize="98dip" />
 
-        <TextView
-            android:id="@+id/text_daysLeft"
-            android:layout_width="fill_parent"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="X days left"
-            android:textColor="@color/white"
-            android:textSize="16dip" />
+            android:gravity="center_horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+            <org.honorato.multistatetogglebutton.MultiStateToggleButton
 
-        <org.honorato.multistatetogglebutton.MultiStateToggleButton
+                android:id="@+id/mstb_multi_id"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:visibility="visible"
+                mstb:mstbPrimaryColor="@color/blau"
+                mstb:mstbSecondaryColor="@color/accent"
+                mstb:values="@array/parts_array" />
 
-            android:id="@+id/mstb_multi_id"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dip"
-            android:gravity="center_vertical"
-            android:visibility="visible"
-            mstb:mstbPrimaryColor="@color/blau"
-            mstb:mstbSecondaryColor="@color/accent"
-            mstb:values="@array/parts_array" />
-
-    </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="fill_parent"

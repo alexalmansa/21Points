@@ -4,6 +4,10 @@ package com.marcllort.a21points.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.ZonedDateTime;
+
+import static com.marcllort.a21points.BloodActivity.toZoneDateTime;
+
 /**
  * Clase que contiene los datos referentes al peso
  */
@@ -21,6 +25,14 @@ public class Weight {
     @SerializedName("weight")
     @Expose
     private Integer weight;
+
+    public Weight() {
+    }
+
+    public Weight(Integer weight) {
+        this.timestamp = toZoneDateTime(ZonedDateTime.now());
+        this.weight = weight;
+    }
 
     /**
      * Getter del identificador del peso con el que se esta tratando
