@@ -384,7 +384,7 @@ public class WeightActivity extends AppCompatActivity implements RestAPICallBack
     public void onFailure(Throwable t) {
         String myFormat = "yyyy-MM"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        RestAPIManager.getInstance().getWeightbyMonth("2019-03", this);
+        //RestAPIManager.getInstance().getWeightbyMonth("2019-03", this);
 
         System.out.println(t.getMessage());
     }

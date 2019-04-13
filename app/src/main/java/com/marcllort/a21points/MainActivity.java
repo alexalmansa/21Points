@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         View mView = getLayoutInflater().inflate(R.layout.preferences_dialog, null);
 
         points_goal = (EditText) mView.findViewById(R.id.weekly_points_goal2);
-        weightUnits = (EditText) mView.findViewById(R.id.weight_units);
 
 
         addButtonPreferences = (Button) mView.findViewById(R.id.btnAddPreferences);
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
             @Override
             public void onClick(View v) {
                 int points_left = Integer.parseInt(points_goal.getText().toString()) - Integer.parseInt(weekPoints.getText().toString());
-                pointsTo.setText(String.valueOf(points_left));
+                pointsTo.setText("Points to goal: "+String.valueOf(points_left));
                 points_goal.setText("");
                 dialog.dismiss();
             }

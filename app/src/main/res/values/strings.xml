@@ -37,11 +37,11 @@
 
     <!-- Blood preassure -->
 
-    <string name="text_blood_diast">Last Diastolic blood preassure</string>
+    <string name="text_blood_diast">Diastolic blood </string>
     <string name="Add_preassure">Add Blood preassure</string>
 
-    <string name="Curr_preassure_syst"> Systolic Blood Preassure</string>
-    <string name="Curr_preassure_diast"> Diastolic Blood Preassure</string>
+    <string name="Curr_preassure_syst"> Systolic Blood</string>
+    <string name="Curr_preassure_diast"> Diastolic Blood </string>
 
     <!-- Weight -->
     <string name="Add_Weight">Add Weight</string>
