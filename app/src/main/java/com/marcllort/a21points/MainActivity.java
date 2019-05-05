@@ -48,7 +48,6 @@ import java.util.Locale;
 
 import android.view.LayoutInflater;
 
-
 public class MainActivity extends AppCompatActivity implements RestAPICallBack {
 
     private static final String TAG = "21Points";
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
     private MultiStateToggleButton multiButton;
     private AlertDialog dialog;
     private TextView pointsTo;
+    private int objective=0;
 
     //main activity
     private TextView main_pointsGoal;
@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
         addButtonPreferences.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                objective=Integer.parseInt(points_goal.getText().toString());
                 int points_left = Integer.parseInt(points_goal.getText().toString()) - Integer.parseInt(weekPoints.getText().toString());
                 pointsTo.setText("Points to goal: "+String.valueOf(points_left));
                 points_goal.setText("");
@@ -463,6 +464,11 @@ public class MainActivity extends AppCompatActivity implements RestAPICallBack {
                 checkReceived(punt);
                 setData(10, 6);
                 chart.invalidate();
+                if (objective!=0) {
+                    System.out.println("ENTRA");
+                    int points_left = objective - Integer.parseInt(weekPoints.getText().toString());
+                    pointsTo.setText("Points to goal: " + String.valueOf(points_left));
+                }
             }
 
         }
