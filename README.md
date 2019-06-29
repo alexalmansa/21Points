@@ -1,6 +1,7 @@
 # 21Points
 Health app for Android, based on the Open Source Project of 21 Points.
 
+<img src="https://github.com/marcllort/21Points/blob/master/Images/Screenshot_20190511-100009_21%20Points.jpg" width="250"> | <img src="https://github.com/marcllort/21Points/blob/master/Images/Screenshot_20190511-100014_21%20Points.jpg" width="250">
 
 ![Screenshot](https://github.com/marcllort/21Points/blob/master/Images/Screenshot_20190511-100009_21%20Points.jpg)
 ![Screenshot](https://github.com/marcllort/21Points/blob/master/Images/Screenshot_20190511-100014_21%20Points.jpg)
